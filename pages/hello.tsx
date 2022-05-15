@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { useState } from "react";
 import styled from "styled-components";
 import { resetButton, fadeIn } from "../lib/styles";
 
@@ -33,15 +34,24 @@ const Button = styled.button`
 `;
 
 const Hello: NextPage = () => {
+  const [showMessage, setShowMessage] = useState<boolean>(false);
+
+  if (showMessage)
+    return (
+      <Container>
+        <h1>I&apos;m sorry, you deserve better!</h1>
+        <p>Stay tuned until I figure this out.</p>
+      </Container>
+    );
+
   return (
-    <Container>
-      <h1>Hello yourself !</h1>
-      <p>To be honest, i don&apos;t know what this website does.</p>
-      <p>Stay tuned until i figure it out.</p>
-      <Button onClick={() => window.alert("I'm sorry")}>
-        I am disappointed
-      </Button>
-    </Container>
+    <>
+      <Container>
+        <h1>Hello yourself!</h1>
+        <p>To be honest, i don&apos;t know what this website does.</p>
+        <Button onClick={() => setShowMessage(true)}>I am disappointed</Button>
+      </Container>
+    </>
   );
 };
 
