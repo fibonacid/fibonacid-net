@@ -5,7 +5,7 @@ import { resetButton, fadeIn } from "../lib/styles";
 
 const Wrapper = styled.div`
   position: absolute;
-  inset: 0;
+  inset: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,6 +17,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   animation: ${fadeIn} 1s;
+  margin: 0.5rem;
 `;
 
 const Button = styled.button`
