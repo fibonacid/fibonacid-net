@@ -35,7 +35,7 @@ type Props = {
 };
 
 const LoginForm: React.FC<Props> = ({ onLogin }) => {
-  const { watch, register } = useForm<Fields>();
+  const { handleSubmit, watch, register } = useForm<Fields>();
   const watchPassword = watch("password");
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const LoginForm: React.FC<Props> = ({ onLogin }) => {
   }, [watchPassword, onLogin]);
 
   return (
-    <form onSubmit={() => console.log("Submit")}>
+    <form onSubmit={handleSubmit(() => console.log("Submit"))}>
       <Field>
         <input
           type="password"
