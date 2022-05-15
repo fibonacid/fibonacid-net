@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import DefaultLayout from "../components/Layout";
 import { myTheme } from "../lib/theme";
+import SEO from "../components/SEO";
 import "@fontsource/comic-mono";
 import "reset-css";
 
@@ -35,12 +36,15 @@ const GlobalStyle = createGlobalStyle`
 function MyApp({ Component, pageProps }: AppProps) {
   const Layout = (Component as any).Layout || DefaultLayout;
   return (
-    <ThemeProvider theme={myTheme}>
-      <GlobalStyle />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ThemeProvider>
+    <>
+      <SEO />
+      <ThemeProvider theme={myTheme}>
+        <GlobalStyle />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
+    </>
   );
 }
 

@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
-import Avatar from "../components/Avatar";
-import styled from "styled-components";
-import LoginForm from "../components/LoginForm";
 import { useRouter } from "next/router";
-import { resetButton, fadeIn } from "../lib/styles";
+import styled from "styled-components";
+import Avatar from "../components/Avatar";
+import LoginForm from "../components/LoginForm";
+import { fadeIn } from "../lib/styles";
 
 const Wrapper = styled.div`
   display: absolute;
