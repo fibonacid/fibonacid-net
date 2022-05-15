@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-import Layout from "../components/Layout";
+import DefaultLayout from "../components/Layout";
 import { myTheme } from "../lib/theme";
 import "@fontsource/comic-mono";
 import "reset-css";
@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Comic Mono";
     font-size: 0.75rem;
 
-    color: #000;
+    color: #fff;
     text-shadow: #fff 1px 0 10px;
   }
   a { 
@@ -28,6 +28,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const Layout = (Component as any).Layout || DefaultLayout;
   return (
     <ThemeProvider theme={myTheme}>
       <GlobalStyle />
