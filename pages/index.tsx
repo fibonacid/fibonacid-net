@@ -3,6 +3,7 @@ import Avatar from "../components/Avatar";
 import styled from "styled-components";
 import LoginForm from "../components/LoginForm";
 import { useRouter } from "next/router";
+import { resetButton, fadeIn } from "../lib/styles";
 
 const Wrapper = styled.div`
   display: absolute;
@@ -15,6 +16,7 @@ const Container = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 15rem;
+  animation: ${fadeIn} 1s;
 `;
 
 const StyledAvatar = styled(Avatar)`

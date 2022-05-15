@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import { css, keyframes } from "styled-components";
 
 export const resetButton = css`
   border: none;
@@ -28,4 +28,13 @@ export const resetInput = css`
   appearance: none;
   border: none;
   outline: none;
+`;
+
+export const fadeIn = keyframes`
+    from {
+        opacity: 0.0;
+    }
+    to {
+        opacity: 1.0;
+    }
 `;

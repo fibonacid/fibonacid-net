@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import styled from "styled-components";
-import { resetButton } from "../lib/styles";
+import { resetButton, fadeIn } from "../lib/styles";
 
 const Wrapper = styled.div`
   position: absolute;
@@ -15,6 +15,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: ${fadeIn} 1s;
 `;
 
 const Button = styled.button`
