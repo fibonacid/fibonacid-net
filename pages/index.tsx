@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Avatar from "../components/Avatar";
 import styled from "styled-components";
 import LoginForm from "../components/LoginForm";
+import { useRouter } from "next/router";
 
 const Wrapper = styled.div`
   display: absolute;
@@ -22,10 +23,11 @@ const StyledAvatar = styled(Avatar)`
 `;
 
 const Home: NextPage = () => {
+  const router = useRouter();
   return (
     <Container>
       <StyledAvatar />
-      <LoginForm />
+      <LoginForm onLogin={() => router.push("/hello")} />
     </Container>
   );
 };

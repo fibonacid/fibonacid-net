@@ -30,17 +30,19 @@ type Fields = {
   password: string;
 };
 
-const LoginForm: React.FC = () => {
+type Props = {
+  onLogin: () => void;
+};
+
+const LoginForm: React.FC<Props> = ({ onLogin }) => {
   const { watch, register } = useForm<Fields>();
   const watchPassword = watch("password");
 
   useEffect(() => {
     if (/hello/i.test(watchPassword)) {
-      window.alert(
-        "Hello yourself :)\nStay tuned until i figure out what this websites does!"
-      );
+      onLogin();
     }
-  }, [watchPassword]);
+  }, [watchPassword, onLogin]);
 
   return (
     <form onSubmit={() => console.log("Submit")}>

@@ -16,7 +16,8 @@ const GlobalStyle = createGlobalStyle`
     background: #121212;
     color: #E5E5E5;
     font-family: "Comic Mono";
-    font-size: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.2;
 
     color: #fff;
     text-shadow: #fff 1px 0 10px;
@@ -24,6 +25,10 @@ const GlobalStyle = createGlobalStyle`
   a { 
     color: #E5E5E5;
     text-decoration: none;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5em;
   }
 `;
 
