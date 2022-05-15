@@ -6,14 +6,20 @@ import "@fontsource/comic-mono";
 import "reset-css";
 
 const GlobalStyle = createGlobalStyle`
+  :root {
+    accent-color: black;
+  }
   html,body,#__next {
     height: 100%;
   }
   body {
-    background: #252525;
+    background: #121212;
     color: #E5E5E5;
     font-family: "Comic Mono";
     font-size: 0.75rem;
+
+    color: #000;
+    text-shadow: #fff 1px 0 10px;
   }
   a { 
     color: #E5E5E5;
