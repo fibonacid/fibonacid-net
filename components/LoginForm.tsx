@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { resetInput } from "../lib/styles";
 
@@ -24,11 +26,30 @@ const Field = styled.div`
   }
 `;
 
+type Fields = {
+  password: string;
+};
+
 const LoginForm: React.FC = () => {
+  const { watch, register } = useForm<Fields>();
+  const watchPassword = watch("password");
+
+  useEffect(() => {
+    if (/hello/i.test(watchPassword)) {
+      window.alert(
+        "Hello yourself :)\nStay tuned until i figure out what this websites does!"
+      );
+    }
+  }, [watchPassword]);
+
   return (
     <form onSubmit={() => console.log("Submit")}>
       <Field>
-        <input type="password" placeholder='Type "hello" to enter'></input>
+        <input
+          type="password"
+          placeholder='Type "hello" to enter'
+          {...register("password")}
+        ></input>
       </Field>
     </form>
   );
