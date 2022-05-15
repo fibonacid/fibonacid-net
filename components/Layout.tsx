@@ -10,9 +10,15 @@ const Container = styled.div`
   height: 100%;
 `;
 
-const Main = styled.main``;
+const Main = styled.main`
+  position: relative;
+  display: flex;
+`;
 
-const Content = styled.div``;
+const Content = styled.div`
+  position: relative;
+  flex: 2;
+`;
 
 type Props = {
   children: ReactNode;
