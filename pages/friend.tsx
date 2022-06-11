@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import styled from "styled-components";
+import FriendList from "../components/FriendList";
 
 const friends = ["Mark", "Tom"];
 
@@ -11,11 +12,7 @@ const Container = styled.div`
 const Friend: NextPage = () => {
   return (
     <Container>
-      <ul>
-        {friends.map((name, index) => (
-          <li key={index}>{name}</li>
-        ))}
-      </ul>
+      <FriendList />
     </Container>
   );
 };
