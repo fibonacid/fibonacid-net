@@ -11,6 +11,9 @@ const Form = styled.form`
   transform: translate(-50%, -50%);
   width: 20rem;
   max-width: calc(100% - 2rem);
+  background: #121212;
+  padding: 2rem;
+  border: solid 1px grey;
 `;
 
 const Heading = styled.h2`

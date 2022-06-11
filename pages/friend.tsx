@@ -20,6 +20,7 @@ const Popup = styled.div`
   max-width: calc(100% - 2rem);
   text-align: center;
   font-size: 1.5rem;
+  background: #121212;
 `;
 
 type Props = {
