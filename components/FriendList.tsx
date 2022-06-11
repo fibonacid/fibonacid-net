@@ -54,7 +54,7 @@ const Item: React.FC<ItemProps> = ({ name, isActive }) => {
   return (
     <Link key={name} href={{ query: { n: name } }} shallow passHref>
       <Anchor
-        onMouseOver={() => {
+        onMouseEnter={() => {
           setTouched(true);
           setTimeout(() => setTouched(false), 3000);
         }}
