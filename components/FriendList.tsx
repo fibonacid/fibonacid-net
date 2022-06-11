@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 
 const Container = styled.nav`
@@ -42,13 +43,31 @@ type Props = {
   isActive: (name: string) => boolean;
 };
 
+type ItemProps = {
+  name: string;
+  isActive: (name: string) => boolean;
+};
+
+const Item: React.FC<ItemProps> = ({ name, isActive }) => {
+  const [touched, setTouched] = useState(false);
+
+  return (
+    <Link key={name} href={{ query: { n: name } }} shallow passHref>
+      <Anchor
+        onMouseOver={() => setTouched(true)}
+        $accent={touched || isActive(name)}
+      >
+        {name}
+      </Anchor>
+    </Link>
+  );
+};
+
 const FriendList: React.FC<Props> = ({ friends, isActive }) => {
   return (
     <Container>
       {friends.map((name) => (
-        <Link key={name} href={{ query: { n: name } }} shallow passHref>
-          <Anchor $accent={isActive(name)}>{name}</Anchor>
-        </Link>
+        <Item key={name} name={name} isActive={isActive} />
       ))}
     </Container>
   );
