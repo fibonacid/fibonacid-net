@@ -3,7 +3,7 @@ import styled from "styled-components";
 import FriendList from "../components/FriendList";
 import { faker } from "@faker-js/faker";
 import FriendForm from "../components/FriendForm";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 const Container = styled.div`
@@ -30,11 +30,11 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 const Friend: NextPage<Props> = (props) => {
   const { friends } = props;
 
-  const [username, setUsername] = useState<string | null>(() =>
-    typeof window === "undefined"
-      ? null
-      : window.localStorage.getItem("username")
-  );
+  const [username, setUsername] = useState<string | null>();
+
+  useEffect(() => {
+    setUsername(window.localStorage.getItem("username"));
+  }, []);
 
   return (
     <Container>
