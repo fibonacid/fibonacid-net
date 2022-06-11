@@ -9,6 +9,7 @@ import { useUser } from "../lib/hooks";
 
 const Container = styled.div`
   margin: 1rem;
+  max-height: 100vh;
 `;
 
 const Popup = styled.div`
@@ -29,7 +30,7 @@ type Props = {
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   let friends: string[] = [];
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 500; i++) {
     friends.push(faker.name.firstName()?.toLowerCase());
   }
   return {
