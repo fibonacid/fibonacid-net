@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import Avatar from "../components/Avatar";
 import LoginForm from "../components/LoginForm";
+import { useUser } from "../lib/hooks";
 import { fadeIn } from "../lib/styles";
 
 const Wrapper = styled.div`
@@ -26,15 +27,18 @@ const StyledAvatar = styled(Avatar)`
 
 const Home: NextPage = () => {
   const router = useRouter();
+  const { name } = useUser();
   return (
     <Container>
       <StyledAvatar />
-      <LoginForm
-        password={"friend"}
-        onLogin={(password) => {
-          router.push("/" + password);
-        }}
-      />
+      {name !== undefined && (
+        <LoginForm
+          password={name || "friend"}
+          onLogin={(password) => {
+            router.push("/" + name ? "hello" : password);
+          }}
+        />
+      )}
     </Container>
   );
 };

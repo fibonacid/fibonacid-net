@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import styled from "styled-components";
-import { Button } from "../components/Button";
+import Button from "../components/Button";
 import { fadeIn } from "../lib/styles";
 
 const Wrapper = styled.div`

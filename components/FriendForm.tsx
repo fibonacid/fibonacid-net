@@ -37,14 +37,15 @@ const FriendForm: React.FC<Props> = ({ onComplete }) => {
   const watchName = watch("name");
 
   const onSubmit = useCallback(() => {
-    onComplete(watchName);
+    const name = watchName?.split(" ")[0]?.slice(0, 10)?.toLowerCase();
+    onComplete(name);
   }, [onComplete, watchName]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Heading>
-        Join a community of lucky people that get greeted by name when they
-        visit my website.
+        Join a community of lucky people who can access this website by typing
+        their name
       </Heading>
       <Field>
         <input
@@ -53,7 +54,7 @@ const FriendForm: React.FC<Props> = ({ onComplete }) => {
           {...register("name")}
         ></input>
       </Field>
-      <Submit>ENTER</Submit>
+      <Submit>PROCEED</Submit>
     </Form>
   );
 };
