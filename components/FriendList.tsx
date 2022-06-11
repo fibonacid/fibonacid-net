@@ -9,17 +9,26 @@ const Container = styled.nav`
   flex-grow: 1;
 `;
 
+const colors = [
+  "rgba(255,0,0)",
+  "rgba(0,255,0)",
+  "rgba(0,255,255)",
+  "rgba(255,255,0)",
+  "cyan",
+  "magenta",
+];
+
 const accent = css`
   color: black;
-  background-color: ${({ theme }) => theme.colors.main};
-  &:nth-child(odd) {
-    background-color: ${({ theme }) => theme.colors.secondary};
-  }
-  border-color: ${({ theme }) => theme.colors.main};
-  &:nth-child(odd) {
-    border-color: ${({ theme }) => theme.colors.secondary};
-  }
-  opacity: 1;
+
+  ${colors.map(
+    (color, index) => `
+    &:nth-child(${colors.length}n + ${index}) {
+      background-color: ${color};
+      border-color: ${color};
+    }
+  `
+  )}
 `;
 
 const Anchor = styled.a<{ $accent?: boolean }>`
