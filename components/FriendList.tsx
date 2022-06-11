@@ -37,7 +37,7 @@ const Anchor = styled.a<{ $accent?: boolean }>`
   border: solid 0.5px;
   font-size: 0.75rem;
   text-align: center;
-  select: none;
+  user-select: none;
 
   color: grey;
   ${({ $accent }) => ($accent ? accent : "")}
