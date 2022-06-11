@@ -37,6 +37,7 @@ const Anchor = styled.a<{ $accent?: boolean }>`
   border: solid 0.5px;
   font-size: 0.75rem;
   text-align: center;
+  select: none;
 
   color: grey;
   ${({ $accent }) => ($accent ? accent : "")}
@@ -63,7 +64,8 @@ const Item: React.FC<ItemProps> = ({ name, isActive }) => {
   return (
     <Link key={name} href={{ query: { n: name } }} shallow passHref>
       <Anchor
-        onMouseEnter={(event) => {
+        as="span"
+        onMouseEnter={(event: any) => {
           setTouched(true);
           setTimeout(() => setTouched(false), 3000);
           gsap.to(event.target, {
