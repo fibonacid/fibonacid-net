@@ -39,15 +39,15 @@ const Anchor = styled.a<{ $accent?: boolean }>`
 
 type Props = {
   friends: string[];
+  isActive: (name: string) => boolean;
 };
 
-const FriendList: React.FC<Props> = ({ friends }) => {
-  const { query } = useRouter();
+const FriendList: React.FC<Props> = ({ friends, isActive }) => {
   return (
     <Container>
-      {friends.map((name, index) => (
-        <Link key={index} href={{ query: { n: name } }} shallow passHref>
-          <Anchor $accent={query.n === name}>{name}</Anchor>
+      {friends.map((name) => (
+        <Link key={name} href={{ query: { n: name } }} shallow passHref>
+          <Anchor $accent={isActive(name)}>{name}</Anchor>
         </Link>
       ))}
     </Container>

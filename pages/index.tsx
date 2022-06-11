@@ -32,7 +32,6 @@ const Home: NextPage = () => {
       <LoginForm
         password={"friend"}
         onLogin={(password) => {
-          console.log(window.navigator);
           router.push("/" + password);
         }}
       />
