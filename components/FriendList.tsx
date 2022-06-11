@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled, { css } from "styled-components";
+import gsap from "../lib/gsap";
 
 const Container = styled.nav`
   display: flex;
@@ -63,9 +63,14 @@ const Item: React.FC<ItemProps> = ({ name, isActive }) => {
   return (
     <Link key={name} href={{ query: { n: name } }} shallow passHref>
       <Anchor
-        onMouseEnter={() => {
+        onMouseEnter={(event) => {
           setTouched(true);
           setTimeout(() => setTouched(false), 3000);
+          gsap.to(event.target, {
+            opacity: 0.0,
+            scale: 0.2,
+            ease: "power3.in",
+          });
         }}
         $accent={touched || isActive(name)}
       >
