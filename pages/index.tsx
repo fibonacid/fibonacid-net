@@ -31,7 +31,10 @@ const Home: NextPage = () => {
       <StyledAvatar />
       <LoginForm
         password={"friend"}
-        onLogin={(password) => router.push("/" + password)}
+        onLogin={(password) => {
+          console.log(window.navigator);
+          router.push("/" + password);
+        }}
       />
     </Container>
   );
