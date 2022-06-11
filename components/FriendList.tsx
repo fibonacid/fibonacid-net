@@ -19,7 +19,7 @@ const accent = css`
   &:nth-child(odd) {
     border-color: ${({ theme }) => theme.colors.secondary};
   }
-  transition: all 100ms;
+  transform: scale(1.1);
 `;
 
 const Anchor = styled.a<{ $accent?: boolean }>`
@@ -30,10 +30,11 @@ const Anchor = styled.a<{ $accent?: boolean }>`
   text-align: center;
 
   border-color: grey;
-  ${({ $accent }) => ($accent ? accent : "")}
+  ${({ $accent }) => ($accent ? accent : "transform: scale(0.9);")}
   &:hover {
     ${accent}
   }
+  transition: all 100ms ease-out;
 `;
 
 type Props = {
