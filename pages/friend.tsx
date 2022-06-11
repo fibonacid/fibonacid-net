@@ -30,7 +30,7 @@ type Props = {
 export const getStaticProps: GetStaticProps<Props> = async () => {
   let friends: string[] = [];
   for (let i = 0; i < 100; i++) {
-    friends.push(faker.name.firstName());
+    friends.push(faker.name.firstName()?.toLowerCase());
   }
   return {
     props: {
