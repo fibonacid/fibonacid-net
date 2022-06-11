@@ -2,9 +2,10 @@ import { GetStaticProps, NextPage } from "next";
 import styled from "styled-components";
 import FriendList from "../components/FriendList";
 import { faker } from "@faker-js/faker";
+import FriendForm from "../components/FriendForm";
+import { useState } from "react";
 
 const Container = styled.div`
-  display: flex;
   margin: 1rem;
 `;
 
@@ -27,9 +28,11 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
 const Friend: NextPage<Props> = (props) => {
   const { friends } = props;
+  const [newFriend, setNewFriend] = useState<string>();
   return (
     <Container>
-      <FriendList friends={friends} />
+      <FriendList friends={newFriend ? [...friends, newFriend] : friends} />
+      {!!newFriend || <FriendForm onComplete={(name) => setNewFriend(name)} />}
     </Container>
   );
 };

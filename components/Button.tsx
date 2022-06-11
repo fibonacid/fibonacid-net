@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { resetButton } from "../lib/styles";
 
-export const Button = styled.button`
+const Button = styled.button`
   ${resetButton}
   color: #000;
   background: #fff;
@@ -13,3 +13,5 @@ export const Button = styled.button`
     transform: scale(1.025);
   }
 `;
+
+export default Button;
