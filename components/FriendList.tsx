@@ -18,6 +18,7 @@ const accent = css`
   &:nth-child(odd) {
     border-color: ${({ theme }) => theme.colors.secondary};
   }
+  opacity: 1;
 `;
 
 const Anchor = styled.a<{ $accent?: boolean }>`
@@ -27,7 +28,7 @@ const Anchor = styled.a<{ $accent?: boolean }>`
   font-size: 0.75rem;
   text-align: center;
 
-  border-color: grey;
+  color: grey;
   ${({ $accent }) => ($accent ? accent : "")}
   &:hover {
     ${accent}
