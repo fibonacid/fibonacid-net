@@ -31,25 +31,26 @@ type Fields = {
 };
 
 type Props = {
-  onLogin: () => void;
+  password: string;
+  onLogin: (password: string) => void;
 };
 
-const LoginForm: React.FC<Props> = ({ onLogin }) => {
+const LoginForm: React.FC<Props> = ({ onLogin, password }) => {
   const { handleSubmit, watch, register } = useForm<Fields>();
   const watchPassword = watch("password");
 
   useEffect(() => {
-    if (/hello/i.test(watchPassword)) {
-      onLogin();
+    if (password.toLowerCase() === watchPassword?.toLowerCase()) {
+      onLogin(password);
     }
-  }, [watchPassword, onLogin]);
+  }, [password, watchPassword, onLogin]);
 
   return (
     <form onSubmit={handleSubmit(() => console.log("Submit"))}>
       <Field>
         <input
           type="password"
-          placeholder='Type "hello" to enter'
+          placeholder={`Type "${password}" to enter`}
           {...register("password")}
         ></input>
       </Field>

@@ -29,7 +29,10 @@ const Home: NextPage = () => {
   return (
     <Container>
       <StyledAvatar />
-      <LoginForm onLogin={() => router.push("/hello")} />
+      <LoginForm
+        password={"friend"}
+        onLogin={(password) => router.push("/" + password)}
+      />
     </Container>
   );
 };
