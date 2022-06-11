@@ -1,16 +1,16 @@
 import Link from "next/link";
 import styled from "styled-components";
 
-const friends = ["Mark", "Tom"];
-
 const Container = styled.nav`
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  gap: 0.25rem;
 `;
 
 const Anchor = styled.a`
   display: block;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem 0.25rem 0.4rem 0.2rem;
+  padding: 0.5rem 0.25rem 0.4rem 0.25rem;
   border: solid 1px;
   font-size: 0.75rem;
   text-align: center;
@@ -27,7 +27,11 @@ const Anchor = styled.a`
   }
 `;
 
-const Friend: React.FC = () => {
+type Props = {
+  friends: string[];
+};
+
+const FriendList: React.FC<Props> = ({ friends }) => {
   return (
     <Container>
       {friends.map((name, index) => (
@@ -39,4 +43,4 @@ const Friend: React.FC = () => {
   );
 };
 
-export default Friend;
+export default FriendList;
