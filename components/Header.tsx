@@ -7,6 +7,7 @@ const Container = styled.header`
 
 const Anchor = styled.a`
   padding: 1rem;
+  color: grey;
 `;
 
 const Header: React.FC = () => {

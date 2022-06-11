@@ -35,7 +35,7 @@ const Home: NextPage = () => {
         <LoginForm
           password={name || "friend"}
           onLogin={(password) => {
-            router.push(name ? "/hello" : "/" + password);
+            router.push(name ? "/friend" : "/" + password);
           }}
         />
       )}
