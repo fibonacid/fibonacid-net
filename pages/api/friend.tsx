@@ -1,12 +1,18 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
-  foo: string;
+  ip: string;
 };
 
 async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+  const forwarded = req.headers["x-forwarded-for"];
+  const ip =
+    typeof forwarded === "string"
+      ? forwarded.split(/, /)[0]
+      : req.socket.remoteAddress;
+
   res.send({
-    foo: "bar",
+    ip: ip || "unknown",
   });
   res.end();
 }
