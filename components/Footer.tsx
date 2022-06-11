@@ -11,7 +11,7 @@ const Container = styled.footer`
 const Footer: React.FC = () => {
   return (
     <Container>
-      <a href="/https://instagram.com/fibonacid">@fibonacid</a>
+      <a href="https://instagram.com/fibonacid">@fibonacid</a>
     </Container>
   );
 };
