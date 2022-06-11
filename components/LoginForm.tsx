@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { resetInput } from "../lib/styles";
+import { Button } from "./Button";
 
 const Field = styled.div`
   input {
@@ -24,6 +25,15 @@ const Field = styled.div`
       opacity: 0;
     }
   }
+  transition: transform 0.3s;
+  &:hover {
+    transform: scale(1.025);
+  }
+`;
+
+const Submit = styled(Button)`
+  width: 100%;
+  background-color: grey;
 `;
 
 type Fields = {
@@ -54,6 +64,7 @@ const LoginForm: React.FC<Props> = ({ onLogin, password }) => {
           {...register("password")}
         ></input>
       </Field>
+      <Submit>ENTER</Submit>
     </form>
   );
 };

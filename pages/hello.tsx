@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import styled from "styled-components";
-import { resetButton, fadeIn } from "../lib/styles";
+import { Button } from "../components/Button";
+import { fadeIn } from "../lib/styles";
 
 const Wrapper = styled.div`
   position: absolute;
@@ -20,18 +21,8 @@ const Container = styled.div`
   margin: 0.5rem;
 `;
 
-const Button = styled.button`
-  ${resetButton}
-  color: #000;
-  background: #fff;
-  padding: 0.5rem 1rem;
+const StyledButton = styled(Button)`
   margin-top: 1rem;
-  cursor: pointer;
-  transition: transform 0.3s;
-
-  &:hover {
-    transform: scale(1.025);
-  }
 `;
 
 const Hello: NextPage = () => {
@@ -50,7 +41,9 @@ const Hello: NextPage = () => {
       <Container>
         <h1>Hello yourself!</h1>
         <p>To be honest, i don&apos;t know what this website does.</p>
-        <Button onClick={() => setShowMessage(true)}>I am disappointed</Button>
+        <StyledButton onClick={() => setShowMessage(true)}>
+          I am disappointed
+        </StyledButton>
       </Container>
     </>
   );
