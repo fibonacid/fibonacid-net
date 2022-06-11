@@ -23,6 +23,15 @@ const Popup = styled.div`
   background: #121212;
 `;
 
+const Anchor = styled.a`
+  display: block;
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: white;
+  opacity: 0.4;
+  text-decoration: underline;
+`;
+
 type Props = {
   friends: string[];
 };
@@ -53,6 +62,13 @@ const Friend: NextPage<Props> = (props) => {
         isActive={(friend) => user.name === friend}
         friends={user.name ? [...friends, user.name] : friends}
       />
+      <Anchor
+        target="_blank"
+        rel="noreferrer"
+        href="https://www.youtube.com/watch?v=XHFy3YWpRx8"
+      >
+        https://www.youtube.com/watch?v=XHFy3YWpRx8
+      </Anchor>
       {user.name === null && (
         <FriendForm
           onComplete={(name) => {
@@ -63,8 +79,8 @@ const Friend: NextPage<Props> = (props) => {
           }}
         />
       )}
-      {showSpinner && (
-        <Popup>Wait a few seconds to see the thing, Goodbye.</Popup>
+      {showSpinner && user.name && (
+        <Popup>Wait a few seconds {user.name}...</Popup>
       )}
     </Container>
   );
