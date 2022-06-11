@@ -6,7 +6,6 @@ const Container = styled.nav`
   display: flex;
   flex-wrap: wrap;
   flex-grow: 1;
-  gap: 0.25rem;
 `;
 
 const accent = css`
@@ -19,21 +18,21 @@ const accent = css`
   &:nth-child(odd) {
     border-color: ${({ theme }) => theme.colors.secondary};
   }
-  transform: scale(1.1);
 `;
 
 const Anchor = styled.a<{ $accent?: boolean }>`
   display: block;
   padding: 0.5rem 0.25rem 0.4rem 0.25rem;
-  border: solid 1px;
+  border: solid 0.5px;
   font-size: 0.75rem;
   text-align: center;
 
   border-color: grey;
-  ${({ $accent }) => ($accent ? accent : "transform: scale(0.9);")}
+  ${({ $accent }) => ($accent ? accent : "")}
   &:hover {
     ${accent}
   }
+  transform: scale(1);
   transition: all 100ms ease-out;
 `;
 
