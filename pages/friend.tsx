@@ -1,11 +1,13 @@
 import { faker } from "@faker-js/faker";
 import { GetStaticProps, NextPage } from "next";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import styled from "styled-components";
 import FriendForm from "../components/FriendForm";
-import FriendList from "../components/FriendList";
 import { useUser } from "../lib/hooks";
+
+const FriendList = dynamic(() => import("../components/FriendList"));
 
 const Container = styled.div`
   margin: 1rem;
