@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import gsap from "../lib/gsap";
+import { faker } from "@faker-js/faker";
 
 const Container = styled.nav`
   display: flex;
@@ -82,11 +83,40 @@ const Item: React.FC<ItemProps> = ({ name, isActive }) => {
   );
 };
 
+type Friend = {
+  id: string;
+  name: string;
+};
+
+const createFriend = (name: string): Friend => {
+  return {
+    id: faker.datatype.uuid(),
+    name,
+  };
+};
+
 const FriendList: React.FC<Props> = ({ friends, isActive }) => {
+  const [newFriends, setNewFriends] = useState<Friend[]>(() =>
+    friends.map(createFriend)
+  );
+  useEffect(() => {
+    let interval = setInterval(() => {
+      const name = faker.name.firstName();
+      const friend = createFriend(name);
+      if (newFriends.length < 500) {
+        setNewFriends([...newFriends, friend]);
+      } else {
+        setNewFriends([friend]);
+      }
+    }, 500);
+    return () => {
+      clearInterval(interval);
+    };
+  });
   return (
     <Container>
-      {friends.map((name) => (
-        <Item key={name} name={name} isActive={isActive} />
+      {newFriends.map(({ id, name }) => (
+        <Item key={id} name={name} isActive={isActive} />
       ))}
     </Container>
   );
