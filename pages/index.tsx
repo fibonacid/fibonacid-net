@@ -27,18 +27,16 @@ const StyledAvatar = styled(Avatar)`
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const { name } = useUser();
   return (
     <Container>
       <StyledAvatar />
-      {name !== undefined && (
         <LoginForm
-          password={name || "friend"}
+          password={"hello"}
           onLogin={(password) => {
-            router.push(name ? "/friend" : "/" + password);
+            router.push("/" + password);
           }}
         />
-      )}
+      
     </Container>
   );
 };
