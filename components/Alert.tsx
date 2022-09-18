@@ -7,6 +7,15 @@ export type AlertProps = PropsWithChildren<{
   className?: string;
 }>;
 
+export const AlertWrapper = styled.div`
+  position: absolute;
+  inset: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
 export const AlertContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,7 +29,11 @@ export const AlertButton = styled(Button)`
 `;
 
 const Alert: React.FC<AlertProps> = ({ className, children }) => {
-  return <AlertContainer className={className}>{children}</AlertContainer>;
+  return (
+    <AlertWrapper>
+      <AlertContainer className={className}>{children}</AlertContainer>
+    </AlertWrapper>
+  );
 };
 
 export default Alert;
