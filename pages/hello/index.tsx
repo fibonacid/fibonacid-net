@@ -16,7 +16,7 @@ const Hello: NextPage = () => {
       <p>To be honest, i don&apos;t know what this website does.</p>
       <AlertButton
         onClick={() => {
-          router.push("/hello/options");
+          router.push(encodeURIComponent("/"));
         }}
       >
         I am disappointed
