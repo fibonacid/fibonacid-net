@@ -32,7 +32,7 @@ const Hello: NextPage = () => {
   if (stage === 2)
     return (
       <Alert>
-        <h1>Fine, here are the links.</h1>
+        <h1>Ok, here are the links.</h1>
         <LinkList>
           <li>
             <Button
@@ -101,7 +101,7 @@ const Hello: NextPage = () => {
   if (stage === 1)
     return (
       <Alert>
-        <h1>I&apos;m sorry, you deserve better!</h1>
+        <h1>I&apos;m sorry, you deserved better!</h1>
         <Button onClick={() => setStage(2)}>
           Show me a few links at least
         </Button>
