@@ -112,7 +112,7 @@ const Hello: NextPage = () => {
     <>
       <Alert>
         <h1>Hello yourself!</h1>
-        <p>To be honest, i don&apos;t know what this website does.</p>
+        <p>To be honest, I don&apos;t care a lot about this website</p>
         <Button onClick={() => setStage(1)}>I am disappointed</Button>
       </Alert>
     </>
