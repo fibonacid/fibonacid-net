@@ -6,7 +6,7 @@ const Field = styled.div`
     ${resetInput}
     display: block;
     text-align: center;
-    margin: 2rem 0;
+    margin: 1.25rem 0;
     padding: 0.5rem 0;
     font-size: 1rem;
     background: #000;
