@@ -1,10 +1,10 @@
-import type { AppProps } from "next/app";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
-import DefaultLayout from "../components/Layout";
-import { myTheme } from "../lib/theme";
-import SEO from "../components/SEO";
 import "@fontsource/comic-mono";
+import type { AppProps } from "next/app";
+import { Fragment } from "react";
 import "reset-css";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
+import SEO from "../components/SEO";
+import { myTheme } from "../lib/theme";
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -34,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const Layout = (Component as any).Layout || DefaultLayout;
+  const Layout = (Component as any).Layout || Fragment;
   return (
     <>
       <SEO />

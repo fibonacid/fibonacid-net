@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import { useState } from "react";
 import styled from "styled-components";
 import Alert, { AlertButton } from "../components/Alert";
-import Button from "../components/Button";
 
 const Wrapper = styled.div`
   position: absolute;
