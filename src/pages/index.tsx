@@ -2,22 +2,57 @@ import { useRef, useState } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 
 export default function Home() {
+  const [attempts, setAttempts] = useState(0);
+  const [success, setSuccess] = useState(false);
+
+  if (success) {
+    return (
+      <main className="m-4">
+        <Hint level={4}>You did it!</Hint>
+        <p>Sadly, this is all i got. Goodnight</p>
+      </main>
+    );
+  }
+
   return (
     <main className="m-4">
-      <h1>
-        Type <span className="underline">something</span> if you want to see my
-        website
-      </h1>
+      {attempts < 4 ? (
+        <p>
+          Type <Hint level={attempts}>something</Hint> if you want to see my
+          website
+        </p>
+      ) : (
+        <p>
+          You literally have to type <Hint level={attempts}>something</Hint>
+        </p>
+      )}
       <InputCode
         className="mt-2"
         onSuccess={() => {
           console.log("Correct!");
+          setSuccess(true);
         }}
         onError={() => {
           console.log("Incorrect!");
+          setAttempts((attempts) => attempts + 1);
         }}
       />
     </main>
+  );
+}
+
+function Hint({ level = 1, children }: { level?: number; children: string }) {
+  return (
+    <span
+      className={twJoin(
+        "inline-block",
+        level > 0 && "underline",
+        level > 1 && "animate-bounce",
+        level > 2 && "border p-1 rounded !no-underline",
+      )}
+    >
+      {children}
+    </span>
   );
 }
 
@@ -94,3 +129,9 @@ function InputCode({
     </fieldset>
   );
 }
+
+/**
+Alligator
+Chameleon
+Porcupine
+*/
