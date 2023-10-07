@@ -1,9 +1,66 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
+
+function useSpeechSynthesis() {
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [speaking, setSpeaking] = useState(false);
+
+  useEffect(() => {
+    const voices = window.speechSynthesis.getVoices();
+    setVoices(voices);
+    if (voices.length === 0) {
+      const onVoicesChanged = () => {
+        const voices = window.speechSynthesis.getVoices();
+        setVoices(voices);
+      };
+      window.speechSynthesis.addEventListener("voiceschanged", onVoicesChanged);
+      return () => {
+        window.speechSynthesis.removeEventListener(
+          "voiceschanged",
+          onVoicesChanged,
+        );
+      };
+    }
+  }, []);
+
+  const speak = (text: string) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    utterance.voice =
+      voices.find((voice) => voice.lang === utterance.lang) || voices[0];
+    utterance.onend = () => {
+      setSpeaking(false);
+    };
+    setSpeaking(true);
+    window.speechSynthesis.speak(utterance);
+  };
+
+  return { voices, speaking, speak };
+}
 
 export default function Home() {
   const [attempts, setAttempts] = useState(0);
   const [success, setSuccess] = useState(false);
+  const { speak } = useSpeechSynthesis();
+
+  useEffect(() => {
+    if (attempts === 0) {
+      speak("Type something");
+    }
+    if (attempts === 1) {
+      speak("Something else");
+    }
+    if (attempts === 2) {
+      speak("Something different");
+    }
+    if (attempts === 3) {
+      speak("You have to type something");
+    }
+    if (attempts === 4) {
+      speak("You literally have to type something");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [attempts]);
 
   if (success) {
     return (
@@ -16,21 +73,16 @@ export default function Home() {
 
   return (
     <main className="m-4">
-      {attempts < 4 ? (
-        <p>
-          Type <Hint level={attempts}>something</Hint> if you want to see my
-          website
-        </p>
-      ) : (
-        <p>
-          You literally have to type <Hint level={attempts}>something</Hint>
-        </p>
-      )}
+      <p>
+        Type <Hint level={attempts}>something</Hint> if you want to see my
+        website
+      </p>
       <InputCode
         className="mt-2"
         onSuccess={() => {
           console.log("Correct!");
           setSuccess(true);
+          speak("You did it!");
         }}
         onError={() => {
           console.log("Incorrect!");
