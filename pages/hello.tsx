@@ -17,6 +17,12 @@ const LinkList = styled.ul`
   list-style: none;
   display: flex;
   gap: 1rem;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 
   li {
     display: block;
