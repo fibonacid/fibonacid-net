@@ -3,7 +3,7 @@ import avatar from "@/assets/avatar.jpg";
 
 export default function Avatar() {
   return (
-    <div className="overflow-hidden relative w-40 h-40 rounded-full shadow-sm">
+    <div className="overflow-hidden relative w-32 h-32 rounded-full shadow-sm border border-neutral-500">
       <Image
         src={avatar}
         alt="Avatar"
