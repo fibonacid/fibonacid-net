@@ -51,10 +51,6 @@ export default function PassCode() {
                 setValues(newValues);
                 return moveFocus(index - 1);
               }
-              // Ignore special characters
-              if (e.key.length > 1 || e.key === " ") {
-                return;
-              }
 
               // Handle arrow keys
               if (e.key === "ArrowRight") {
@@ -62,6 +58,11 @@ export default function PassCode() {
               }
               if (e.key === "ArrowLeft") {
                 return moveFocus(index - 1);
+              }
+
+              // Ignore special characters
+              if (e.key.length > 1 || e.key === " ") {
+                return;
               }
 
               // Set the value of the input
