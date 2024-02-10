@@ -6,11 +6,11 @@ export default function Avatar() {
     <Image
       src={avatar}
       alt="Avatar"
-      width={128}
-      height={128}
+      width={160}
+      height={160}
       placeholder="blur"
       quality={100}
-      className="rounded-full overflow-hidden w-32 h-32"
+      className="rounded-full overflow-hidden w-40 h-40 shadow-sm"
     />
   );
 }
