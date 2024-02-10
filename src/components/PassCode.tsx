@@ -28,13 +28,6 @@ export default function PassCode() {
           value={values[index]}
           disabled={loading}
           onKeyDown={(e) => {
-            // Handle arrow keys
-            if (e.key === "ArrowRight") {
-              return moveFocus(index + 1);
-            }
-            if (e.key === "ArrowLeft") {
-              return moveFocus(index - 1);
-            }
             if (e.key === "Backspace") {
               // Remove the nearest value and move focus
               const newValues = [...values];
@@ -50,20 +43,37 @@ export default function PassCode() {
             if (e.key.length > 1 || e.key === " ") {
               return;
             }
+
+            // Handle arrow keys
+            if (e.key === "ArrowRight") {
+              return moveFocus(index + 1);
+            }
+            if (e.key === "ArrowLeft") {
+              return moveFocus(index - 1);
+            }
+
             // Set the value of the input
             const newValues = [...values];
             newValues[index] = e.key;
 
+            // Update state synchronously
             flushSync(() => {
               setValues(newValues);
             });
 
             const numValues = newValues.filter((v) => v).length;
+
+            // If all values are entered, check the passcode
+            // Otherwise, move focus to the next input
+
             if (numValues === PASSCODE.length) {
               const entered = newValues.join("");
+
               if (entered === PASSCODE) {
+                // Redirect to the next page
                 router.push("/hello");
               } else {
+                // Reset the values and move focus
                 setValues(["", "", "", "", ""]);
                 moveFocus(0);
               }
