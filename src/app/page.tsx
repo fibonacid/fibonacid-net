@@ -14,7 +14,11 @@ export default function Home() {
 function LoginForm() {
   return (
     <form>
-      <input type="password" placeholder="Type hello to enter" />
+      <input
+        type="password"
+        placeholder="Type hello to enter"
+        className="bg-neutral-950 rounded-sm border-none text-center"
+      />
     </form>
   );
 }
