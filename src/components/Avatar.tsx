@@ -9,7 +9,7 @@ export default function Avatar() {
         alt="Avatar"
         placeholder="blur"
         quality={100}
-        layout="fill"
+        className="object-fill h-full w-full"
       />
     </div>
   );
