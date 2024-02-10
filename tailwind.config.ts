@@ -8,7 +8,11 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Comic Mono", "ui-monospace", "system-ui", "sans-serif"],
+      },
+    },
   },
   plugins: [forms()],
 };

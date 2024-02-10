@@ -1,8 +1,6 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import "@fontsource/comic-mono"; // Defaults to weight 400
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-neutral-900 h-full">
+    <html lang="en" className="bg-neutral-900 text-neutral-50 h-full">
       <body className="h-full">{children}</body>
     </html>
   );
