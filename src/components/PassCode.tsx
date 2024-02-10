@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 
 const PASSCODE = "hello";
@@ -16,6 +16,13 @@ export default function PassCode() {
     if (!element) return;
     const inputs = element.querySelectorAll("input");
     const input = inputs.item(index);
+    input?.focus();
+  }, []);
+
+  useEffect(() => {
+    const element = container.current;
+    if (!element) return;
+    const input = element.querySelector("input");
     input?.focus();
   }, []);
 
