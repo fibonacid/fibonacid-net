@@ -1,12 +1,12 @@
 import { expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import PassCode from "../PassCode";
+import PassCode, { getInputLabel } from "../PassCode";
 
 const NUMBER_OF_INPUTS = 5;
 
 function getInput(index: number) {
-  return screen.getByLabelText(`Passcode input ${index + 1}`, {
+  return screen.getByLabelText(getInputLabel(index), {
     exact: false,
   });
 }
@@ -27,5 +27,16 @@ test("accepts input", async () => {
     const value = i.toString();
     await user.type(input, value);
     expect(input).toHaveValue(value);
+  }
+});
+
+test("accepts only one character", async () => {
+  const user = userEvent.setup();
+  render(<PassCode />);
+
+  for (let i = 0; i < 5; i++) {
+    const input = getInput(i);
+    await user.type(input, "123");
+    expect(input).toHaveValue("1");
   }
 });
