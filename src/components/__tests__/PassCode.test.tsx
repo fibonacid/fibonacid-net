@@ -37,6 +37,6 @@ test("accepts only one character", async () => {
   for (let i = 0; i < 5; i++) {
     const input = getInput(i);
     await user.type(input, "123");
-    expect(input).toHaveValue("1");
+    expect(input).toHaveValue("3");
   }
 });

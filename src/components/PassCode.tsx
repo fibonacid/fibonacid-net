@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 export default function PassCode() {
   return (
     <div>
@@ -13,11 +15,18 @@ export default function PassCode() {
 function PassCodeInput({ index }: { index: number }) {
   const id = getInputId(index);
   const label = getInputLabel(index);
+  const [value, setValue] = useState("");
 
   return (
     <div>
       <label htmlFor={id}>{label}</label>
-      <input id={id} type="text" />
+      <input
+        id={id}
+        type="text"
+        onChange={(e) => e.preventDefault()}
+        onKeyDown={(e) => setValue(e.key)}
+        value={value}
+      />
     </div>
   );
 }
