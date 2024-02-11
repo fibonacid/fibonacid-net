@@ -29,14 +29,16 @@ test("accept a key and focuses next element", async () => {
   // focus first input
   await user.click(getInput(0));
 
-  for (let i = 0; i < NUMBER_OF_INPUTS - 1; i++) {
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
     const key = i.toString();
     await user.keyboard(key);
 
     const currInput = getInput(i);
     expect(currInput).toHaveValue(key);
 
-    const nextInput = getInput(i + 1);
-    expect(nextInput).toHaveFocus();
+    if (i < NUMBER_OF_INPUTS - 1) {
+      const nextInput = getInput(i + 1);
+      expect(nextInput).toHaveFocus();
+    }
   }
 });
