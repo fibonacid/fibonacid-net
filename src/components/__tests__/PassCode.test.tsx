@@ -62,6 +62,6 @@ test("deletes keys with backspace", async () => {
 
     // delete key
     await user.keyboard("{Backspace}");
-    expect(input).not.toHaveValue(key);
+    expect(input).toHaveValue("");
   }
 });
