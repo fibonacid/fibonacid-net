@@ -83,3 +83,51 @@ test("moves focus to previous input with backspace", async () => {
     expect(prevInput).toHaveFocus();
   }
 });
+
+test("accepts only alphanumeric keys", async () => {
+  const { user } = setup();
+  // default US-104-QWERTY keyboard
+  const invalidKeys = [
+    " ",
+    "!",
+    "#",
+    "$",
+    "%",
+    "&",
+    "(",
+    ")",
+    "*",
+    "@",
+    "Alt",
+    "AltGraph",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowUp",
+    "Backspace",
+    "CapsLock",
+    "Control",
+    "Delete",
+    "End",
+    "Enter",
+    "Escape",
+    "Fn",
+    "Home",
+    "Meta",
+    "OS",
+    "PageDown",
+    "PageUp",
+    "Shift",
+    "Symbol",
+    "Tab",
+    "^",
+  ];
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
+    const input = getInput(i);
+    await user.click(input);
+    for (const key of invalidKeys) {
+      await user.keyboard(key);
+      expect(input).not.toHaveValue(key);
+    }
+  }
+});

@@ -60,8 +60,13 @@ function PassCodeInput({
   const handleKeyDown = useCallback<KeyboardEventHandler>(
     (e) => {
       const isBackspace = e.key === "Backspace";
+      const isNumber = /^\d$/.test(e.key);
+      const isLetter = /^[a-zA-Z]$/.test(e.key);
+      const isInvalidKey = !isNumber && !isBackspace && !isLetter;
 
-      if (isBackspace && value) {
+      if (isInvalidKey) {
+        return;
+      } else if (isBackspace && value) {
         setValue("");
       } else if (isBackspace && !value) {
         onPrevInput(index);
