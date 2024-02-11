@@ -1,3 +1,15 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "overrides": [
+    {
+      "files": [
+        "**/*.test.tsx",
+        "**/*.spec.tsx",
+        "**/*.test.ts",
+        "**/*.spec.ts"
+      ],
+      "plugins": ["vitest"],
+      "extends": ["plugin:vitest/recommended"]
+    }
+  ]
 }
