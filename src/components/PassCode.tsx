@@ -59,19 +59,20 @@ function PassCodeInput({
 
   const handleKeyDown = useCallback<KeyboardEventHandler>(
     (e) => {
-      const isBackspace = e.key === "Backspace";
-      const isNumber = /^\d$/.test(e.key);
-      const isLetter = /^[a-zA-Z]$/.test(e.key);
-      const isInvalidKey = !isNumber && !isBackspace && !isLetter;
+      const event = e.nativeEvent;
 
-      if (isInvalidKey) {
-        return;
-      } else if (isBackspace && value) {
-        setValue("");
-      } else if (isBackspace && !value) {
-        onPrevInput(index);
-      } else {
+      if (isLetter(event) || isNumber(event)) {
         setValue(e.key);
+        onNextInput(index);
+      } else if (isBackspace(event)) {
+        if (value) {
+          setValue("");
+        } else {
+          onPrevInput(index);
+        }
+      } else if (isArrowLeft(event)) {
+        onPrevInput(index);
+      } else if (isArrowRight(event)) {
         onNextInput(index);
       }
     },
@@ -93,11 +94,27 @@ function PassCodeInput({
         onKeyDown={handleKeyDown}
         onChange={handleChange}
         value={value}
-        className="w-12 h-12 text-xl text-center bg-neutral-950 rounded-md shadow-sm"
+        className="uppercase w-12 h-12 text-xl text-center bg-neutral-950 rounded-md shadow-sm"
         autoComplete="off"
       />
     </div>
   );
+}
+
+function isBackspace(e: KeyboardEvent) {
+  return e.key === "Backspace";
+}
+function isArrowLeft(e: KeyboardEvent) {
+  return e.key === "ArrowLeft";
+}
+function isArrowRight(e: KeyboardEvent) {
+  return e.key === "ArrowRight";
+}
+function isNumber(e: KeyboardEvent) {
+  return /^\d$/.test(e.key);
+}
+function isLetter(e: KeyboardEvent) {
+  return /^[a-zA-Z]$/.test(e.key);
 }
 
 export function getInputLabel(index: number) {

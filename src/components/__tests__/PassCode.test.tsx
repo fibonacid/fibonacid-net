@@ -101,8 +101,6 @@ test("accepts only alphanumeric keys", async () => {
     "Alt",
     "AltGraph",
     "ArrowDown",
-    "ArrowLeft",
-    "ArrowRight",
     "ArrowUp",
     "Backspace",
     "CapsLock",
