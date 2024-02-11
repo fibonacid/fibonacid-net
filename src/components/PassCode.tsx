@@ -1,21 +1,60 @@
 "use client";
 
-import { useState } from "react";
+import {
+  useCallback,
+  useRef,
+  useState,
+  type KeyboardEventHandler,
+  type ChangeEventHandler,
+} from "react";
+
+type NextInputHandler = (currentIndex: number) => void;
 
 export default function PassCode() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleNextInput = useCallback<NextInputHandler>((currentIndex) => {
+    const container = containerRef.current;
+    const inputs = container?.querySelectorAll("input");
+    const nextInput = inputs?.[currentIndex + 1];
+    nextInput?.focus();
+  }, []);
+
   return (
-    <div>
+    <div ref={containerRef}>
       {[...Array(5)].map((_, index) => (
-        <PassCodeInput index={index} key={index} />
+        <PassCodeInput
+          index={index}
+          key={index}
+          onNextInput={handleNextInput}
+        />
       ))}
     </div>
   );
 }
 
-function PassCodeInput({ index }: { index: number }) {
+function PassCodeInput({
+  index,
+  onNextInput,
+}: {
+  index: number;
+  onNextInput: NextInputHandler;
+}) {
   const id = getInputId(index);
   const label = getInputLabel(index);
   const [value, setValue] = useState("");
+
+  const handleKeyDown = useCallback<KeyboardEventHandler>(
+    (e) => {
+      setValue(e.key);
+      onNextInput(index);
+    },
+    [onNextInput, index],
+  );
+
+  const handleChange = useCallback<ChangeEventHandler>(() => {
+    // noop
+  }, []);
 
   return (
     <div>
@@ -23,8 +62,8 @@ function PassCodeInput({ index }: { index: number }) {
       <input
         id={id}
         type="text"
-        onChange={(e) => e.preventDefault()}
-        onKeyDown={(e) => setValue(e.key)}
+        onKeyDown={handleKeyDown}
+        onChange={handleChange}
         value={value}
       />
     </div>
