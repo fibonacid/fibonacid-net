@@ -8,9 +8,9 @@ function getInput(index: number) {
   });
 }
 
-test("renders passcode inputs", () => {
+test("renders 5 passcode inputs", () => {
   render(<PassCode />);
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 5; i++) {
     expect(getInput(i)).toBeInTheDocument();
   }
 });
