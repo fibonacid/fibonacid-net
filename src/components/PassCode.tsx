@@ -10,6 +10,8 @@ import {
 
 type NextInputHandler = (currentIndex: number) => void;
 
+export const NUMBER_OF_INPUTS = 5;
+
 export default function PassCode() {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -21,8 +23,8 @@ export default function PassCode() {
   }, []);
 
   return (
-    <div ref={containerRef}>
-      {[...Array(5)].map((_, index) => (
+    <div ref={containerRef} className="flex gap-2">
+      {[...Array(NUMBER_OF_INPUTS)].map((_, index) => (
         <PassCodeInput
           index={index}
           key={index}
@@ -58,13 +60,17 @@ function PassCodeInput({
 
   return (
     <div>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} className="sr-only">
+        {label}
+      </label>
       <input
         id={id}
         type="text"
         onKeyDown={handleKeyDown}
         onChange={handleChange}
         value={value}
+        className="w-12 h-12 text-xl text-center bg-neutral-950 rounded-md shadow-sm"
+        autoComplete="off"
       />
     </div>
   );

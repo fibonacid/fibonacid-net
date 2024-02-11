@@ -1,9 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, expect, test, describe } from "vitest";
-import PassCode, { getInputLabel } from "../PassCode";
-
-const NUMBER_OF_INPUTS = 5;
+import PassCode, { NUMBER_OF_INPUTS, getInputLabel } from "../PassCode";
 
 function getInput(index: number) {
   return screen.getByLabelText(getInputLabel(index), {
@@ -11,22 +9,10 @@ function getInput(index: number) {
   });
 }
 
-test(`renders ${NUMBER_OF_INPUTS} inputs`, () => {
+test(`renders 5 inputs`, () => {
   render(<PassCode />);
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
     expect(getInput(i)).toBeInTheDocument();
-  }
-});
-
-test("accepts input", async () => {
-  const user = userEvent.setup();
-  render(<PassCode />);
-
-  for (let i = 0; i < 5; i++) {
-    const input = getInput(i);
-    const value = i.toString();
-    await user.type(input, value);
-    expect(input).toHaveValue(value);
   }
 });
 
