@@ -65,3 +65,21 @@ test("deletes keys with backspace", async () => {
     expect(input).toHaveValue("");
   }
 });
+
+test("moves focus to previous input with backspace", async () => {
+  const { user } = setup();
+
+  for (let i = NUMBER_OF_INPUTS - 1; i > 0; i--) {
+    const currInput = getInput(i);
+    const prevInput = getInput(i - 1);
+
+    // focus input
+    await user.click(currInput);
+
+    // type backspace
+    await user.keyboard("{Backspace}");
+
+    // check focus
+    expect(prevInput).toHaveFocus();
+  }
+});
