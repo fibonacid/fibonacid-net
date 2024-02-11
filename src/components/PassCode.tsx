@@ -36,9 +36,12 @@ export default function PassCode() {
           <input
             id={`passcode-${index}`}
             key={index}
-            className="w-12 h-12 text-xl text-center bg-neutral-950 rounded-sm"
+            className="w-12 h-12 text-xl text-center bg-neutral-950 rounded-md shadow-sm"
             value={values[index]}
             autoComplete="off"
+            onChange={(e) => {
+              e.preventDefault();
+            }}
             onKeyDown={(e) => {
               if (e.key === "Backspace") {
                 // Remove the nearest value and move focus
