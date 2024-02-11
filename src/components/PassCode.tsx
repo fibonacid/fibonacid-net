@@ -9,6 +9,7 @@ import {
 } from "react";
 
 type NextInputHandler = (currentIndex: number) => void;
+type PrevInputHandler = (currentIndex: number) => void;
 
 export const NUMBER_OF_INPUTS = 5;
 
@@ -22,6 +23,13 @@ export default function PassCode() {
     nextInput?.focus();
   }, []);
 
+  const handlePrevInput = useCallback<PrevInputHandler>((currentIndex) => {
+    const container = containerRef.current;
+    const inputs = container?.querySelectorAll("input");
+    const prevInput = inputs?.[currentIndex - 1];
+    prevInput?.focus();
+  }, []);
+
   return (
     <div ref={containerRef} className="flex gap-2">
       {[...Array(NUMBER_OF_INPUTS)].map((_, index) => (
@@ -29,6 +37,7 @@ export default function PassCode() {
           index={index}
           key={index}
           onNextInput={handleNextInput}
+          onPrevInput={handlePrevInput}
         />
       ))}
     </div>
@@ -38,9 +47,11 @@ export default function PassCode() {
 function PassCodeInput({
   index,
   onNextInput,
+  onPrevInput,
 }: {
   index: number;
   onNextInput: NextInputHandler;
+  onPrevInput: PrevInputHandler;
 }) {
   const id = getInputId(index);
   const label = getInputLabel(index);
@@ -48,10 +59,18 @@ function PassCodeInput({
 
   const handleKeyDown = useCallback<KeyboardEventHandler>(
     (e) => {
-      setValue(e.key);
-      onNextInput(index);
+      const isBackspace = e.key === "Backspace";
+
+      if (isBackspace && value) {
+        setValue("");
+      } else if (isBackspace && !value) {
+        onPrevInput(index);
+      } else {
+        setValue(e.key);
+        onNextInput(index);
+      }
     },
-    [onNextInput, index],
+    [onNextInput, onPrevInput, value, index],
   );
 
   const handleChange = useCallback<ChangeEventHandler>(() => {
