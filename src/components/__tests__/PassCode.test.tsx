@@ -129,3 +129,47 @@ test("accepts only alphanumeric keys", async () => {
     }
   }
 });
+
+test("arrow right moves focus to the next input", async () => {
+  const { user } = setup();
+
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
+    const currInput = getInput(i);
+
+    // focus input
+    await user.click(currInput);
+
+    // press right arrow
+    await user.keyboard("{ArrowRight}");
+
+    if (i < NUMBER_OF_INPUTS - 1) {
+      const nextInput = getInput(i + 1);
+      expect(nextInput).toHaveFocus();
+    } else {
+      // there is no next input
+      expect(currInput).toHaveFocus();
+    }
+  }
+});
+
+test("arrow left moves focus to the previous input", async () => {
+  const { user } = setup();
+
+  for (let i = NUMBER_OF_INPUTS - 1; i >= 0; i--) {
+    const currInput = getInput(i);
+
+    // focus input
+    await user.click(currInput);
+
+    // press right arrow
+    await user.keyboard("{ArrowLeft}");
+
+    if (i > 0) {
+      const prevInput = getInput(i - 1);
+      expect(prevInput).toHaveFocus();
+    } else {
+      // there is no next input
+      expect(currInput).toHaveFocus();
+    }
+  }
+});
