@@ -20,6 +20,7 @@ export type PassCodeProps = {
 export default function PassCode({ validate }: PassCodeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [code, setCode] = useState(initialCode);
+  const [isValidating, setIsValidating] = useState(false);
 
   const getInputs = useCallback(() => {
     const container = containerRef.current;
@@ -56,10 +57,13 @@ export default function PassCode({ validate }: PassCodeProps) {
         // resolve the promise if it's a promise
         if (valueOrPromise instanceof Promise) {
           try {
+            setIsValidating(true);
             isValid = await valueOrPromise;
           } catch (err) {
             console.error(err);
             isValid = false;
+          } finally {
+            setIsValidating(false);
           }
         } else {
           isValid = valueOrPromise;
@@ -103,6 +107,7 @@ export default function PassCode({ validate }: PassCodeProps) {
           onKeyInput={handleKeyInput}
           onNextInput={handleNextInput}
           onPrevInput={handlePrevInput}
+          isValidating={isValidating}
         />
       ))}
     </div>
@@ -115,12 +120,14 @@ function PassCodeInput({
   onNextInput,
   onPrevInput,
   onKeyInput,
+  isValidating,
 }: {
   index: number;
   value: string;
   onNextInput: NextInputHandler;
   onPrevInput: PrevInputHandler;
   onKeyInput: KeyInputHandler;
+  isValidating: boolean;
 }) {
   const id = getInputId(index);
   const label = getInputLabel(index);
@@ -159,8 +166,9 @@ function PassCodeInput({
         onKeyDown={handleKeyDown}
         onChange={noop}
         value={value}
-        className="uppercase w-12 h-12 text-xl text-center bg-neutral-950 rounded-md shadow-sm"
+        className="uppercase w-12 h-12 text-xl text-center bg-neutral-950 rounded-md shadow-sm text-neutral-50 disabled:text-opacity-50 disabled:cursor-not-allowed"
         autoComplete="off"
+        disabled={isValidating}
       />
     </div>
   );

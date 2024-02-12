@@ -246,7 +246,7 @@ test("clears inputs when validate returns false (async)", async () => {
   expect(getInput(0)).toHaveFocus();
 });
 
-test("should lose focus when all inputs are filled", async () => {
+test("loses focus when all inputs are filled", async () => {
   const { user, validate } = setup();
   validate.mockReturnValueOnce(
     new Promise((resolve) => {
@@ -262,5 +262,24 @@ test("should lose focus when all inputs are filled", async () => {
 
   for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
     expect(getInput(i)).not.toHaveFocus();
+  }
+});
+
+test("disables inputs during validation", async () => {
+  const { user, validate } = setup();
+  validate.mockReturnValueOnce(
+    new Promise((resolve) => {
+      setTimeout(() => resolve(true), 1000);
+    }),
+  );
+
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
+    const input = getInput(i);
+    await user.click(input);
+    await user.keyboard(i.toString());
+  }
+
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
+    expect(getInput(i)).toBeDisabled();
   }
 });
