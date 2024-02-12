@@ -10,16 +10,28 @@ import {
 
 type NextInputHandler = (index: number) => void;
 type PrevInputHandler = (index: number) => void;
+type KeyInputHandler = (index: number, key: string) => void;
 
 export const NUMBER_OF_INPUTS = 5;
 
+const initialCode = new Array<string>(NUMBER_OF_INPUTS).fill("");
+
 export default function PassCode() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [code, setCode] = useState(initialCode);
 
   const getInputs = useCallback(() => {
     const container = containerRef.current;
     const inputs = container?.querySelectorAll("input");
     return inputs ?? [];
+  }, []);
+
+  const handleKeyInput = useCallback<KeyInputHandler>((index, key) => {
+    setCode((prev) => {
+      const newCode = [...prev];
+      newCode[index] = key;
+      return newCode;
+    });
   }, []);
 
   const handleNextInput = useCallback<NextInputHandler>(
@@ -44,8 +56,10 @@ export default function PassCode() {
     <div ref={containerRef} className="flex gap-2">
       {[...Array(NUMBER_OF_INPUTS)].map((_, index) => (
         <PassCodeInput
-          index={index}
           key={index}
+          index={index}
+          value={code[index] ?? ""}
+          onKeyInput={handleKeyInput}
           onNextInput={handleNextInput}
           onPrevInput={handlePrevInput}
         />
@@ -56,27 +70,30 @@ export default function PassCode() {
 
 function PassCodeInput({
   index,
+  value,
   onNextInput,
   onPrevInput,
+  onKeyInput,
 }: {
   index: number;
+  value: string;
   onNextInput: NextInputHandler;
   onPrevInput: PrevInputHandler;
+  onKeyInput: KeyInputHandler;
 }) {
   const id = getInputId(index);
   const label = getInputLabel(index);
-  const [value, setValue] = useState("");
 
   const handleKeyDown = useCallback<KeyboardEventHandler>(
     (e) => {
       const event = e.nativeEvent;
 
       if (isLetter(event) || isNumber(event)) {
-        setValue(e.key);
+        onKeyInput(index, e.key);
         onNextInput(index);
       } else if (isBackspace(event)) {
         if (value) {
-          setValue("");
+          onKeyInput(index, "");
         } else {
           onPrevInput(index);
         }
@@ -86,7 +103,7 @@ function PassCodeInput({
         onNextInput(index);
       }
     },
-    [onNextInput, onPrevInput, value, index],
+    [onNextInput, onPrevInput, onKeyInput, value, index],
   );
 
   const handleChange = useCallback<ChangeEventHandler>(() => {
@@ -114,15 +131,19 @@ function PassCodeInput({
 function isBackspace(e: KeyboardEvent) {
   return e.key === "Backspace";
 }
+
 function isArrowLeft(e: KeyboardEvent) {
   return e.key === "ArrowLeft";
 }
+
 function isArrowRight(e: KeyboardEvent) {
   return e.key === "ArrowRight";
 }
+
 function isNumber(e: KeyboardEvent) {
   return /^\d$/.test(e.key);
 }
+
 function isLetter(e: KeyboardEvent) {
   return /^[a-zA-Z]$/.test(e.key);
 }
