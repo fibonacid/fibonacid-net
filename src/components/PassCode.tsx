@@ -8,27 +8,37 @@ import {
   type ChangeEventHandler,
 } from "react";
 
-type NextInputHandler = (currentIndex: number) => void;
-type PrevInputHandler = (currentIndex: number) => void;
+type NextInputHandler = (index: number) => void;
+type PrevInputHandler = (index: number) => void;
 
 export const NUMBER_OF_INPUTS = 5;
 
 export default function PassCode() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleNextInput = useCallback<NextInputHandler>((currentIndex) => {
+  const getInputs = useCallback(() => {
     const container = containerRef.current;
     const inputs = container?.querySelectorAll("input");
-    const nextInput = inputs?.[currentIndex + 1];
-    nextInput?.focus();
+    return inputs ?? [];
   }, []);
 
-  const handlePrevInput = useCallback<PrevInputHandler>((currentIndex) => {
-    const container = containerRef.current;
-    const inputs = container?.querySelectorAll("input");
-    const prevInput = inputs?.[currentIndex - 1];
-    prevInput?.focus();
-  }, []);
+  const handleNextInput = useCallback<NextInputHandler>(
+    (index) => {
+      const inputs = getInputs();
+      const nextInput = inputs[index + 1];
+      nextInput?.focus();
+    },
+    [getInputs],
+  );
+
+  const handlePrevInput = useCallback<PrevInputHandler>(
+    (index) => {
+      const inputs = getInputs();
+      const prevInput = inputs[index - 1];
+      prevInput?.focus();
+    },
+    [getInputs],
+  );
 
   return (
     <div ref={containerRef} className="flex gap-2">
