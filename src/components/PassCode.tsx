@@ -47,6 +47,7 @@ export default function PassCode({ validate }: PassCodeProps) {
       // if the code is complete, validate it
       if (newCode.every(Boolean)) {
         const codeString = newCode.join("");
+        resetFocus();
 
         // call the validate function
         const valueOrPromise = validate(codeString);
@@ -163,6 +164,12 @@ function PassCodeInput({
       />
     </div>
   );
+}
+
+function resetFocus() {
+  if (document.activeElement instanceof HTMLElement) {
+    document.activeElement.blur();
+  }
 }
 
 function noop() {

@@ -9,7 +9,8 @@ export default function Home() {
       <div className="flex flex-col items-center gap-6">
         <Avatar />
         <PassCode
-          validate={(code) => {
+          validate={async (code) => {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             return code === "hello";
           }}
         />
