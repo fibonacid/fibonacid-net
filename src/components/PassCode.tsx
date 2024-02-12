@@ -1,11 +1,8 @@
-"use client";
-
 import {
   useCallback,
   useRef,
   useState,
   type KeyboardEventHandler,
-  type ChangeEventHandler,
 } from "react";
 
 type NextInputHandler = (index: number) => void;
@@ -16,7 +13,11 @@ export const NUMBER_OF_INPUTS = 5;
 
 const initialCode = new Array<string>(NUMBER_OF_INPUTS).fill("");
 
-export default function PassCode() {
+export type PassCodeProps = {
+  validate: (code: string) => boolean | Promise<boolean>;
+};
+
+export default function PassCode({ validate }: PassCodeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [code, setCode] = useState(initialCode);
 
@@ -26,14 +27,24 @@ export default function PassCode() {
     return inputs ?? [];
   }, []);
 
-  const handleKeyInput = useCallback<KeyInputHandler>((index, key) => {
-    if (index < 0 || index >= NUMBER_OF_INPUTS) return;
-    setCode((prev) => {
-      const newCode = [...prev];
+  const handleKeyInput = useCallback<KeyInputHandler>(
+    (index, key) => {
+      // check if the index is valid
+      if (index < 0 || index >= NUMBER_OF_INPUTS) return;
+
+      // update the code
+      const newCode = [...code];
       newCode[index] = key;
-      return newCode;
-    });
-  }, []);
+      setCode(newCode);
+
+      // if the code is complete, validate it
+      if (newCode.every(Boolean)) {
+        const codeString = newCode.join("");
+        validate(codeString);
+      }
+    },
+    [code, validate],
+  );
 
   const handleNextInput = useCallback<NextInputHandler>(
     (index) => {
@@ -108,10 +119,6 @@ function PassCodeInput({
     [onNextInput, onPrevInput, onKeyInput, value, index],
   );
 
-  const handleChange = useCallback<ChangeEventHandler>(() => {
-    // noop
-  }, []);
-
   return (
     <div>
       <label htmlFor={id} className="sr-only">
@@ -121,13 +128,17 @@ function PassCodeInput({
         id={id}
         type="text"
         onKeyDown={handleKeyDown}
-        onChange={handleChange}
+        onChange={noop}
         value={value}
         className="uppercase w-12 h-12 text-xl text-center bg-neutral-950 rounded-md shadow-sm"
         autoComplete="off"
       />
     </div>
   );
+}
+
+function noop() {
+  // do nothing
 }
 
 function isBackspace(e: KeyboardEvent) {

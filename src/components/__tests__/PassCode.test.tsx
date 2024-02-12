@@ -1,12 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
 import PassCode, { NUMBER_OF_INPUTS, getInputLabel } from "../PassCode";
 
 function setup() {
+  const validate = vi.fn();
   return {
     user: userEvent.setup(),
-    ...render(<PassCode />),
+    validate,
+    ...render(<PassCode validate={validate} />),
   };
 }
 
@@ -192,4 +194,22 @@ test("arrow left moves focus to the previous input", async () => {
       expect(currInput).toHaveFocus();
     }
   }
+});
+
+test("calls validate with the code when all inputs are filled", async () => {
+  const { user, validate } = setup();
+
+  const firstInput = getInput(0);
+  await user.click(firstInput);
+  await user.keyboard("0");
+
+  expect(validate).not.toHaveBeenCalled();
+
+  for (let i = 1; i < NUMBER_OF_INPUTS; i++) {
+    const input = getInput(i);
+    await user.click(input);
+    await user.keyboard(i.toString());
+  }
+
+  expect(validate).toHaveBeenCalledWith("01234");
 });
