@@ -25,6 +25,13 @@ test("renders 5 empty inputs", () => {
   }
 });
 
+test("renders 5 enabled inputs", () => {
+  setup();
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
+    expect(getInput(i)).not.toBeDisabled();
+  }
+});
+
 test("accept a key and focuses next element", async () => {
   const { user } = setup();
 
@@ -267,19 +274,31 @@ test("loses focus when all inputs are filled", async () => {
 
 test("disables inputs during validation", async () => {
   const { user, validate } = setup();
+  const delay = 1000;
+
   validate.mockReturnValueOnce(
     new Promise((resolve) => {
-      setTimeout(() => resolve(true), 1000);
+      setTimeout(() => resolve(true), delay);
     }),
   );
 
+  // fill inputs
   for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
     const input = getInput(i);
     await user.click(input);
     await user.keyboard(i.toString());
   }
 
+  // inputs are disabled
   for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
     expect(getInput(i)).toBeDisabled();
+  }
+
+  // wait for validation to finish
+  await new Promise((resolve) => setTimeout(resolve, delay));
+
+  // inputs are enabled
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
+    expect(getInput(i)).not.toBeDisabled();
   }
 });
