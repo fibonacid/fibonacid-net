@@ -16,10 +16,10 @@ function getInput(index: number) {
   });
 }
 
-test("renders 5 inputs", () => {
+test("renders 5 empty inputs", () => {
   setup();
   for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
-    expect(getInput(i)).toBeInTheDocument();
+    expect(getInput(i)).toHaveValue("");
   }
 });
 
