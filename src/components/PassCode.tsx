@@ -27,6 +27,7 @@ export default function PassCode() {
   }, []);
 
   const handleKeyInput = useCallback<KeyInputHandler>((index, key) => {
+    if (index < 0 || index >= NUMBER_OF_INPUTS) return;
     setCode((prev) => {
       const newCode = [...prev];
       newCode[index] = key;
@@ -95,6 +96,7 @@ function PassCodeInput({
         if (value) {
           onKeyInput(index, "");
         } else {
+          onKeyInput(index - 1, "");
           onPrevInput(index);
         }
       } else if (isArrowLeft(event)) {

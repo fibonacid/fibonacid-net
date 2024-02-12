@@ -84,6 +84,26 @@ test("moves focus to previous input with backspace", async () => {
   }
 });
 
+test("deletes previous input with backspace", async () => {
+  const { user } = setup();
+
+  for (let i = 0; i < NUMBER_OF_INPUTS - 1; i++) {
+    const key = i.toString();
+    const currInput = getInput(i);
+
+    // focus input
+    await user.click(currInput);
+
+    // fill input
+    await user.keyboard(key);
+    expect(currInput).toHaveValue(key);
+
+    // type backspace
+    await user.keyboard("{Backspace}");
+    expect(currInput).toHaveValue("");
+  }
+});
+
 test("accepts only alphanumeric keys", async () => {
   const { user } = setup();
   // default US-104-QWERTY keyboard
