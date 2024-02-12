@@ -54,11 +54,11 @@ export default function PassCode() {
 
   return (
     <div ref={containerRef} className="flex gap-2">
-      {[...Array(NUMBER_OF_INPUTS)].map((_, index) => (
+      {code.map((value, index) => (
         <PassCodeInput
           key={index}
           index={index}
-          value={code[index] ?? ""}
+          value={value}
           onKeyInput={handleKeyInput}
           onNextInput={handleNextInput}
           onPrevInput={handlePrevInput}
