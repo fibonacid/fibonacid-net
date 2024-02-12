@@ -27,8 +27,15 @@ export default function PassCode({ validate }: PassCodeProps) {
     return inputs ?? [];
   }, []);
 
+  const reset = useCallback(() => {
+    setCode(initialCode);
+    const inputs = getInputs();
+    const firstInput = inputs[0];
+    firstInput?.focus();
+  }, [setCode, getInputs]);
+
   const handleKeyInput = useCallback<KeyInputHandler>(
-    (index, key) => {
+    async (index, key) => {
       // check if the index is valid
       if (index < 0 || index >= NUMBER_OF_INPUTS) return;
 
@@ -40,10 +47,31 @@ export default function PassCode({ validate }: PassCodeProps) {
       // if the code is complete, validate it
       if (newCode.every(Boolean)) {
         const codeString = newCode.join("");
-        validate(codeString);
+
+        // call the validate function
+        const valueOrPromise = validate(codeString);
+        let isValid: boolean;
+
+        // resolve the promise if it's a promise
+        if (valueOrPromise instanceof Promise) {
+          try {
+            isValid = await valueOrPromise;
+          } catch (err) {
+            console.error(err);
+            isValid = false;
+          }
+        } else {
+          isValid = valueOrPromise;
+        }
+
+        if (isValid) {
+          console.log("Code is valid");
+        } else {
+          reset();
+        }
       }
     },
-    [code, validate],
+    [code, validate, reset],
   );
 
   const handleNextInput = useCallback<NextInputHandler>(

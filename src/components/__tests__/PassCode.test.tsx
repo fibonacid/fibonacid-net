@@ -213,3 +213,35 @@ test("calls validate with the code when all inputs are filled", async () => {
 
   expect(validate).toHaveBeenCalledWith("01234");
 });
+
+test("reset state when validate returns false (sync)", async () => {
+  const { user, validate } = setup();
+  validate.mockReturnValueOnce(false);
+
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
+    const input = getInput(i);
+    await user.click(input);
+    await user.keyboard(i.toString());
+  }
+
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
+    expect(getInput(i)).toHaveValue("");
+  }
+  expect(getInput(0)).toHaveFocus();
+});
+
+test("clears inputs when validate returns false (async)", async () => {
+  const { user, validate } = setup();
+  validate.mockReturnValueOnce(Promise.resolve(false));
+
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
+    const input = getInput(i);
+    await user.click(input);
+    await user.keyboard(i.toString());
+  }
+
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
+    expect(getInput(i)).toHaveValue("");
+  }
+  expect(getInput(0)).toHaveFocus();
+});
