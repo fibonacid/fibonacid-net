@@ -1,14 +1,15 @@
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { expect, test, vi } from "vitest";
+import { expect, test, vi, afterEach } from "vitest";
 import PassCode, { NUMBER_OF_INPUTS, getInputLabel } from "../PassCode";
 
-function setup() {
-  const validate = vi.fn();
+// This is required apparently
+afterEach(cleanup);
+
+function setup(props: { validate: () => boolean | Promise<boolean> }) {
   return {
     user: userEvent.setup(),
-    validate,
-    ...render(<PassCode validate={validate} />),
+    ...render(<PassCode {...props} />),
   };
 }
 
@@ -19,21 +20,21 @@ function getInput(index: number) {
 }
 
 test("renders 5 empty inputs", () => {
-  setup();
+  setup({ validate: () => true });
   for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
     expect(getInput(i)).toHaveValue("");
   }
 });
 
 test("renders 5 enabled inputs", () => {
-  setup();
+  setup({ validate: () => true });
   for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
     expect(getInput(i)).not.toBeDisabled();
   }
 });
 
-test("accept a key and focuses next element", async () => {
-  const { user } = setup();
+test("accepts a key and focuses next element", async () => {
+  const { user } = setup({ validate: () => true });
 
   // focus first input
   await user.click(getInput(0));
@@ -53,7 +54,9 @@ test("accept a key and focuses next element", async () => {
 });
 
 test("deletes keys with backspace", async () => {
-  const { user } = setup();
+  const { user } = setup({
+    validate: () => true,
+  });
 
   for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
     const input = getInput(i);
@@ -76,7 +79,9 @@ test("deletes keys with backspace", async () => {
 });
 
 test("moves focus to previous input with backspace", async () => {
-  const { user } = setup();
+  const { user } = setup({
+    validate: () => true,
+  });
 
   for (let i = NUMBER_OF_INPUTS - 1; i > 0; i--) {
     const currInput = getInput(i);
@@ -94,7 +99,9 @@ test("moves focus to previous input with backspace", async () => {
 });
 
 test("deletes previous input with backspace", async () => {
-  const { user } = setup();
+  const { user } = setup({
+    validate: () => true,
+  });
 
   for (let i = 0; i < NUMBER_OF_INPUTS - 1; i++) {
     const key = i.toString();
@@ -114,7 +121,9 @@ test("deletes previous input with backspace", async () => {
 });
 
 test("accepts only alphanumeric keys", async () => {
-  const { user } = setup();
+  const { user } = setup({
+    validate: () => true,
+  });
   // default US-104-QWERTY keyboard
   const invalidKeys = [
     " ",
@@ -160,7 +169,9 @@ test("accepts only alphanumeric keys", async () => {
 });
 
 test("arrow right moves focus to the next input", async () => {
-  const { user } = setup();
+  const { user } = setup({
+    validate: () => true,
+  });
 
   for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
     const currInput = getInput(i);
@@ -182,7 +193,9 @@ test("arrow right moves focus to the next input", async () => {
 });
 
 test("arrow left moves focus to the previous input", async () => {
-  const { user } = setup();
+  const { user } = setup({
+    validate: () => true,
+  });
 
   for (let i = NUMBER_OF_INPUTS - 1; i >= 0; i--) {
     const currInput = getInput(i);
@@ -204,25 +217,32 @@ test("arrow left moves focus to the previous input", async () => {
 });
 
 test("calls validate with the code when all inputs are filled", async () => {
-  const { user, validate } = setup();
+  const validate = vi.fn().mockImplementationOnce((...args) => {
+    console.log("Validate called with", args);
+    return true;
+  });
+  const { user } = setup({
+    validate,
+  });
 
   const firstInput = getInput(0);
   await user.click(firstInput);
-  await user.keyboard("0");
 
   expect(validate).not.toHaveBeenCalled();
 
-  for (let i = 1; i < NUMBER_OF_INPUTS; i++) {
-    const input = getInput(i);
-    await user.click(input);
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
     await user.keyboard(i.toString());
   }
 
+  expect(validate).toHaveBeenCalledTimes(1);
   expect(validate).toHaveBeenCalledWith("01234");
 });
 
 test("reset state when validate returns false (sync)", async () => {
-  const { user, validate } = setup();
+  const validate = vi.fn().mockReturnValue(false);
+  const { user } = setup({
+    validate,
+  });
   validate.mockReturnValueOnce(false);
 
   for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
@@ -238,12 +258,15 @@ test("reset state when validate returns false (sync)", async () => {
 });
 
 test("clears inputs when validate returns false (async)", async () => {
-  const { user, validate } = setup();
-  validate.mockReturnValueOnce(Promise.resolve(false));
+  const validate = vi.fn().mockResolvedValueOnce(false);
+  const { user } = setup({
+    validate,
+  });
+
+  const firstInput = getInput(0);
+  await user.click(firstInput);
 
   for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
-    const input = getInput(i);
-    await user.click(input);
     await user.keyboard(i.toString());
   }
 
@@ -254,12 +277,15 @@ test("clears inputs when validate returns false (async)", async () => {
 });
 
 test("loses focus when all inputs are filled", async () => {
-  const { user, validate } = setup();
-  validate.mockReturnValueOnce(
+  const validate = vi.fn().mockReturnValue(
     new Promise((resolve) => {
-      setTimeout(() => resolve(true), 1000);
+      setTimeout(resolve, 1000);
     }),
   );
+
+  const { user } = setup({
+    validate,
+  });
 
   for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
     const input = getInput(i);
@@ -273,14 +299,15 @@ test("loses focus when all inputs are filled", async () => {
 });
 
 test("disables inputs during validation", async () => {
-  const { user, validate } = setup();
-  const delay = 1000;
-
-  validate.mockReturnValueOnce(
+  const validate = vi.fn().mockReturnValueOnce(
     new Promise((resolve) => {
-      setTimeout(() => resolve(true), delay);
+      setTimeout(resolve, 1000);
     }),
   );
+  const { user } = setup({
+    validate,
+  });
+  const delay = 1000;
 
   // fill inputs
   for (let i = 0; i < NUMBER_OF_INPUTS; i++) {

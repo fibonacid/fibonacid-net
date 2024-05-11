@@ -4,6 +4,8 @@ import {
   useState,
   type KeyboardEventHandler,
 } from "react";
+import { flushSync } from "react-dom";
+import type { Mock } from "vitest";
 
 type NextInputHandler = (index: number) => void;
 type PrevInputHandler = (index: number) => void;
@@ -29,7 +31,9 @@ export default function PassCode({ validate }: PassCodeProps) {
   }, []);
 
   const reset = useCallback(() => {
-    setCode(initialCode);
+    flushSync(() => {
+      setCode(initialCode);
+    });
     const inputs = getInputs();
     const firstInput = inputs[0];
     firstInput?.focus();
@@ -46,34 +50,29 @@ export default function PassCode({ validate }: PassCodeProps) {
       setCode(newCode);
 
       // if the code is complete, validate it
-      if (newCode.every(Boolean)) {
+      if (newCode.every((value) => value !== "")) {
         const codeString = newCode.join("");
         resetFocus();
 
         // call the validate function
+        console.log("Validating code...");
+
         const valueOrPromise = validate(codeString);
         let isValid: boolean;
 
         // resolve the promise if it's a promise
         if (valueOrPromise instanceof Promise) {
+          setIsValidating(true);
           try {
-            setIsValidating(true);
             isValid = await valueOrPromise;
-          } catch (err) {
-            console.error(err);
+          } catch {
             isValid = false;
-          } finally {
-            setIsValidating(false);
           }
+          flushSync(() => setIsValidating(false));
         } else {
           isValid = valueOrPromise;
         }
-
-        if (isValid) {
-          console.log("Code is valid");
-        } else {
-          reset();
-        }
+        if (!isValid) reset();
       }
     },
     [code, validate, reset],
