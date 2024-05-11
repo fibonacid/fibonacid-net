@@ -1,12 +1,16 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { expect, test, vi, afterEach } from "vitest";
-import PassCode, { NUMBER_OF_INPUTS, getInputLabel } from "../PassCode";
+import { afterEach, expect, test, vi } from "vitest";
+import PassCode, {
+  NUMBER_OF_INPUTS,
+  getInputLabel,
+  type PassCodeProps,
+} from "../PassCode";
 
 // This is required apparently
 afterEach(cleanup);
 
-function setup(props: { validate: () => boolean | Promise<boolean> }) {
+function setup(props: PassCodeProps) {
   return {
     user: userEvent.setup(),
     ...render(<PassCode {...props} />),
@@ -328,4 +332,22 @@ test("disables inputs during validation", async () => {
   for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
     expect(getInput(i)).not.toBeDisabled();
   }
+});
+
+test("calls onSuccess when validation is successful", async () => {
+  const validate = vi.fn().mockReturnValue(true);
+  const onSuccess = vi.fn();
+
+  const { user } = setup({
+    validate,
+    onSuccess,
+  });
+
+  for (let i = 0; i < NUMBER_OF_INPUTS; i++) {
+    const input = getInput(i);
+    await user.click(input);
+    await user.keyboard(i.toString());
+  }
+
+  expect(onSuccess).toHaveBeenCalledTimes(1);
 });

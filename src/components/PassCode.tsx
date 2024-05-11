@@ -17,9 +17,10 @@ const initialCode = new Array<string>(NUMBER_OF_INPUTS).fill("");
 
 export type PassCodeProps = {
   validate: (code: string) => boolean | Promise<boolean>;
+  onSuccess?: () => void;
 };
 
-export default function PassCode({ validate }: PassCodeProps) {
+export default function PassCode({ validate, onSuccess }: PassCodeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [code, setCode] = useState(initialCode);
   const [isValidating, setIsValidating] = useState(false);
@@ -72,7 +73,11 @@ export default function PassCode({ validate }: PassCodeProps) {
         } else {
           isValid = valueOrPromise;
         }
-        if (!isValid) reset();
+        if (isValid) {
+          onSuccess?.();
+        } else {
+          reset();
+        }
       }
     },
     [code, validate, reset],

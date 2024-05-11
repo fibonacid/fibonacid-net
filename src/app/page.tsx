@@ -2,6 +2,8 @@
 
 import Avatar from "@/components/Avatar";
 import PassCode from "@/components/PassCode";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 
 async function validate(code: string) {
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -9,11 +11,14 @@ async function validate(code: string) {
 }
 
 export default function Home() {
+  const router = useRouter();
+  const onSuccess = useCallback(() => router.push("/hello"), [router]);
+
   return (
     <main className="min-h-full grid gap-4 place-content-center">
       <div className="flex flex-col items-center gap-6">
         <Avatar />
-        <PassCode validate={validate} />
+        <PassCode validate={validate} onSuccess={onSuccess} />
         <h1 className="text-lg">
           Type <i>hello</i> to enter
         </h1>
