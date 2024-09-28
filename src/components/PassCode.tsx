@@ -89,7 +89,7 @@ export default function PassCode({ validate, onSuccess }: PassCodeProps) {
         }
       }
     },
-    [code, validate, reset],
+    [code, validate, onSuccess, reset],
   );
 
   const handleNextInput = useCallback<NextInputHandler>(
