@@ -5,7 +5,6 @@ import {
   type KeyboardEventHandler,
 } from "react";
 import { flushSync } from "react-dom";
-import type { Mock } from "vitest";
 
 type NextInputHandler = (index: number) => void;
 type PrevInputHandler = (index: number) => void;
