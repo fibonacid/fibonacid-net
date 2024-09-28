@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 export const StepContext = createContext<{
   index: number;
@@ -29,11 +30,15 @@ export function Step(props: StepProps) {
   const { index, setIndex } = useStep();
   const next = () => setIndex(index + 1);
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       {typeof props.children === "function"
         ? props.children({ next })
         : props.children}
-    </>
+    </motion.div>
   );
 }
 
@@ -44,5 +49,9 @@ export type StepsProps = {
 export function Steps(props: StepsProps) {
   const { index } = useStep();
   const Content = props.content[index];
-  return <Step>{Content}</Step>;
+  return (
+    <AnimatePresence mode="wait">
+      <Step key={index}>{Content}</Step>;
+    </AnimatePresence>
+  );
 }
