@@ -9,7 +9,7 @@ import {
 const USERNAME = "fibonacid";
 
 export const Links = () => (
-  <nav className="flex gap-3">
+  <nav className="flex gap-3 flex-wrap items-center justify-center">
     <GHLink username={USERNAME} />
     <LinkedInLink username={USERNAME} />
     <TwitterLink username={USERNAME} />
