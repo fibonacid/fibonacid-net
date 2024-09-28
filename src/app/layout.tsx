@@ -1,6 +1,7 @@
 import "@fontsource/comic-mono"; // Defaults to weight 400
 import "./globals.css";
 import type { Metadata } from "next";
+import { AnimatePresence } from "framer-motion";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-neutral-900 text-neutral-50 h-full">
-      <body className="h-full">{children}</body>
+      <body className="h-full">
+        <AnimatePresence mode="wait">{children}</AnimatePresence>
+      </body>
     </html>
   );
 }
