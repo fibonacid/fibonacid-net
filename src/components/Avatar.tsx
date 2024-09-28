@@ -1,9 +1,17 @@
 import Image from "next/image";
 import avatar from "@/assets/avatar.jpg";
+import { motion } from "framer-motion";
+import { cn } from "@/utils/cn";
 
-export default function Avatar() {
+export default function Avatar({ className }: { className?: string }) {
   return (
-    <div className="overflow-hidden relative w-32 h-32 rounded-full shadow-sm border border-neutral-500">
+    <motion.div
+      layoutId="avatar"
+      className={cn(
+        "overflow-hidden relative w-32 h-32 rounded-full shadow-sm border border-neutral-500/80",
+        className,
+      )}
+    >
       <Image
         src={avatar}
         alt="Avatar"
@@ -11,6 +19,6 @@ export default function Avatar() {
         quality={100}
         className="object-fill h-full w-full"
       />
-    </div>
+    </motion.div>
   );
 }

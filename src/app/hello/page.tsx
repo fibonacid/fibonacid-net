@@ -4,6 +4,7 @@ import { Button, ButtonLink } from "@/components/Button";
 import { Content } from "./Content";
 import { Links } from "./Links";
 import { Steps, StepsProvider, type StepsProps } from "./Step";
+import Avatar from "@/components/Avatar";
 
 const content: StepsProps["content"] = [
   ({ next }) => (
@@ -30,6 +31,10 @@ const content: StepsProps["content"] = [
 export default function Hello() {
   return (
     <main className="min-h-full grid gap-4 place-content-center">
+      <header className="flex gap-3 absolute left-5 top-5 items-center">
+        <Avatar className="w-10 h-10" />
+        <h1 className="text-md text-white/50">fibonacid.net</h1>
+      </header>
       <StepsProvider>
         <Steps content={content} />
       </StepsProvider>
