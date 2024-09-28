@@ -18,7 +18,7 @@ export default function Home() {
     <main className="min-h-full grid gap-4 place-content-center">
       <div className="flex flex-col items-center gap-6">
         <Avatar />
-        <PassCode validate={validate} onSuccess={onSuccess} />
+        <PassCode autoFocus validate={validate} onSuccess={onSuccess} />
         <h1 className="text-lg">
           Type <i>hello</i> to enter
         </h1>

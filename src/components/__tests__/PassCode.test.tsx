@@ -351,3 +351,8 @@ test("calls onSuccess when validation is successful", async () => {
 
   expect(onSuccess).toHaveBeenCalledTimes(1);
 });
+
+test("focuses input when autoFocus is true", () => {
+  setup({ validate: () => true, autoFocus: true });
+  expect(getInput(0)).toHaveFocus();
+});

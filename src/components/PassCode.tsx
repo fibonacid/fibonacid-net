@@ -1,5 +1,6 @@
 import {
   useCallback,
+  useEffect,
   useRef,
   useState,
   type KeyboardEventHandler,
@@ -17,6 +18,7 @@ const initialCode = new Array<string>(NUMBER_OF_INPUTS).fill("");
 export type PassCodeProps = {
   validate: (code: string) => boolean | Promise<boolean>;
   onSuccess?: () => void;
+  autoFocus?: boolean;
 };
 
 export default function PassCode({ validate, onSuccess }: PassCodeProps) {
@@ -29,6 +31,14 @@ export default function PassCode({ validate, onSuccess }: PassCodeProps) {
     const inputs = container?.querySelectorAll("input");
     return inputs ?? [];
   }, []);
+
+  useEffect(() => {
+    const inputs = getInputs();
+    const firstInput = inputs[0];
+    if (firstInput && firstInput.disabled === false) {
+      firstInput.focus();
+    }
+  }, [getInputs]);
 
   const reset = useCallback(() => {
     flushSync(() => {
