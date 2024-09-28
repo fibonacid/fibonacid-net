@@ -31,7 +31,7 @@ const content: StepsProps["content"] = [
 export default function Hello() {
   return (
     <main className="min-h-full grid gap-4 place-content-center">
-      <header className="absolute inset-x-5 top-5 flex gap-3 items-center">
+      <header className="z-10 absolute inset-x-5 top-5 flex gap-3 items-center">
         <Avatar className="w-10 h-10" />
         <h1 className="text-md text-white/50">fibonacid.net</h1>
       </header>
