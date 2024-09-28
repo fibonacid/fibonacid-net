@@ -10,18 +10,26 @@ const content: StepsProps["content"] = [
   ({ next }) => (
     <Content title="Hello yourself!">
       <p>To be honest, I don&apos;t care a lot about this website</p>
-      <Button onClick={next}>I am dissapointed</Button>
+      <Button onClick={next} className="absolute bottom-10 md:static">
+        I am dissapointed
+      </Button>
     </Content>
   ),
   ({ next }) => (
     <Content title="I am sorry, you deserve better!">
-      <Button onClick={next}>Show me a few links at least</Button>
+      <Button onClick={next} className="absolute bottom-10 md:static">
+        Show me a few links at least
+      </Button>
     </Content>
   ),
   () => (
     <Content title="Ok, here they are:">
       <Links />
-      <ButtonLink href="/" variant="link" className="absolute bottom-5">
+      <ButtonLink
+        href="/"
+        variant="link"
+        className="absolute bottom-10 md:bottom-5"
+      >
         Restart this amazing journey
       </ButtonLink>
     </Content>
