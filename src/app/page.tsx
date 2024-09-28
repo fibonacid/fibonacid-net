@@ -8,7 +8,7 @@ import { useCallback } from "react";
 
 async function validate(code: string) {
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  return code === "hello";
+  return code.toLowerCase() === "hello";
 }
 
 export default function Home() {
