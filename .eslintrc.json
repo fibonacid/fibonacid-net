@@ -7,9 +7,7 @@
         "**/*.spec.tsx",
         "**/*.test.ts",
         "**/*.spec.ts"
-      ],
-      "plugins": ["vitest"],
-      "extends": ["plugin:vitest/recommended"]
+      ]
     }
   ]
 }

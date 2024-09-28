@@ -8,7 +8,7 @@ import { Steps, StepsProvider, type StepsProps } from "./Step";
 const content: StepsProps["content"] = [
   ({ next }) => (
     <Content title="Hello yourself!">
-      <p>To be honest, I don't care a lot about this website</p>
+      <p>To be honest, I don&apos;t care a lot about this website</p>
       <Button onClick={next}>I am dissapointed</Button>
     </Content>
   ),
@@ -17,12 +17,14 @@ const content: StepsProps["content"] = [
       <Button onClick={next}>Show me a few links at least</Button>
     </Content>
   ),
-  <Content title="Ok, here they are:">
-    <Links />
-    <ButtonLink href="/" variant="link" className="absolute bottom-5">
-      Restart this amazing journey
-    </ButtonLink>
-  </Content>,
+  () => (
+    <Content title="Ok, here they are:">
+      <Links />
+      <ButtonLink href="/" variant="link" className="absolute bottom-5">
+        Restart this amazing journey
+      </ButtonLink>
+    </Content>
+  ),
 ];
 
 export default function Hello() {
