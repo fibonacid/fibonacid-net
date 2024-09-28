@@ -15,6 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-neutral-900 text-neutral-50 h-full">
+      <link rel="icon" href="/fibonacid.png" sizes="any" />
       <body className="h-full">
         <AnimatePresence mode="wait">{children}</AnimatePresence>
       </body>
