@@ -25,3 +25,7 @@ export function Button<T extends ElementType = "button">(
     </Component>
   );
 }
+
+export function ButtonLink(props: ButtonProps<"a">) {
+  return <Button as="a" {...props} />;
+}
