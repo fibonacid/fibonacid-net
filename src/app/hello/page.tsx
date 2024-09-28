@@ -1,15 +1,9 @@
 "use client";
 
-import { Button } from "@/components/Button";
-import { type ReactNode } from "react";
+import { Button, ButtonLink } from "@/components/Button";
+import { Content } from "./Content";
+import { Links } from "./Links";
 import { Steps, StepsProvider, type StepsProps } from "./Step";
-
-const Content = (props: { title: string; children: ReactNode }) => (
-  <div className="text-center flex flex-col gap-5 justify-center items-center">
-    <h1 className="text-3xl">{props.title}</h1>
-    {props.children}
-  </div>
-);
 
 const content: StepsProps["content"] = [
   ({ next }) => (
@@ -19,17 +13,16 @@ const content: StepsProps["content"] = [
     </Content>
   ),
   ({ next }) => (
-    <Content title="I am sorry">
-      <p>I am just a test</p>
-      <Button onClick={next}>I am sorry</Button>
+    <Content title="I am sorry, you deserve better!">
+      <Button onClick={next}>Show me a few links at least</Button>
     </Content>
   ),
-  ({ next }) => (
-    <Content title="Goodbye">
-      <p>Goodbye!</p>
-      <Button onClick={next}>Goodbye</Button>
-    </Content>
-  ),
+  <Content title="Ok, here they are:">
+    <Links />
+    <ButtonLink href="/" variant="link" className="absolute bottom-5">
+      Restart this amazing journey
+    </ButtonLink>
+  </Content>,
 ];
 
 export default function Hello() {
