@@ -1,12 +1,13 @@
-import Image from "next/image";
 import avatar from "@/assets/avatar.jpg";
-import { motion } from "framer-motion";
 import { cn } from "@/utils/cn";
+import { easeOut, motion } from "framer-motion";
+import Image from "next/image";
 
 export default function Avatar({ className }: { className?: string }) {
   return (
     <motion.div
       layoutId="avatar"
+      transition={{ layout: { ease: "easeOut", duration: 0.2 } }}
       className={cn(
         "overflow-hidden relative w-32 h-32 rounded-full shadow-sm border border-neutral-500/80",
         className,
