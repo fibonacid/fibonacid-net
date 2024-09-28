@@ -1,0 +1,5 @@
+{
+  "css.validate": false,
+  "tailwindCSS.validate": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
