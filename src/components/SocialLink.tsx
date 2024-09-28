@@ -68,7 +68,7 @@ export function DevLink({ username }: { username: string }) {
         color: "white",
       }}
     >
-      DEV
+      Blog
     </SocialLink>
   );
 }
@@ -83,6 +83,20 @@ export function InstagramLink({ username }: { username: string }) {
       }}
     >
       Instagram
+    </SocialLink>
+  );
+}
+
+export function SoundCloudLink({ username }: { username: string }) {
+  return (
+    <SocialLink
+      href={`https://soundcloud.com/${username}`}
+      style={{
+        backgroundColor: "#ff5500",
+        color: "white",
+      }}
+    >
+      SoundCloud
     </SocialLink>
   );
 }
