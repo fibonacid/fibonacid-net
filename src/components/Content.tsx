@@ -7,6 +7,7 @@ export const Content = (props: { title: string; children: ReactNode }) => (
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
     className="p-5 text-center flex flex-col gap-5 justify-center items-center"
+    style={{ willChange: "none" }} // prevents absolute positioning from breaking
   >
     <h1 className="text-3xl text-balance">{props.title}</h1>
     {props.children}
