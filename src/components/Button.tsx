@@ -17,7 +17,7 @@ export function Button<T extends ElementType = "button">(
   return (
     <Component
       className={cn(
-        "py-2 px-3 leading-[1.0] w-max border-white/50 rounded-sm",
+        "py-2 px-3 leading-[1.0] w-max border-white/50 rounded-sm outline-none focus-visible:ring",
         variant === "filled" && "border bg-white text-black",
         variant === "outlined" && "border",
         variant === "link" &&

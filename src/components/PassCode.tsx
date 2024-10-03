@@ -179,7 +179,7 @@ function PassCodeInput({
         onKeyDown={handleKeyDown}
         onChange={noop}
         value={value}
-        className="uppercase w-12 h-12 text-xl text-center bg-neutral-950 rounded-md shadow-sm text-neutral-50 disabled:text-opacity-50 disabled:cursor-not-allowed"
+        className="outline-none focus-visible:ring uppercase w-12 h-12 text-xl text-center bg-neutral-950 rounded-md shadow-sm text-neutral-50 disabled:text-opacity-50 disabled:cursor-not-allowed"
         autoComplete="off"
         disabled={isValidating}
       />
