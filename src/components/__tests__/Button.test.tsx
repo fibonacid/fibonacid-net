@@ -1,4 +1,4 @@
-import { cleanup, render } from "@testing-library/react";
+import { screen, cleanup, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ElementType } from "react";
 import { afterEach, expect, test } from "vitest";
@@ -16,13 +16,14 @@ function setup<T extends ElementType = "button">(props: ButtonProps<T>) {
 
 test("renders a button", () => {
   setup({ children: "Click me" });
-  expect(document.querySelector("button")).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Click me" })).toBeInTheDocument();
 });
 
 test("renders an anchor tag", () => {
   setup({ as: "a", children: "Click me", href: "https://example.com" });
-  expect(document.querySelector("a")).toBeInTheDocument();
-  expect(document.querySelector("a")).toHaveAttribute(
+  const getLink = (name: string) => screen.getByRole("link", { name });
+  expect(getLink("Click me")).toBeInTheDocument();
+  expect(getLink("Click me")).toHaveAttribute(
     "href",
     "https://example.com",
   );
