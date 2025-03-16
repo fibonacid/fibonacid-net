@@ -17,7 +17,7 @@ export function SocialLink(props: SocialLinkProps) {
   );
 }
 
-export function GHLink({ username }: { username: string }) {
+export function GithubLink({ username }: { username: string }) {
   return (
     <SocialLink
       href={`https://github.com/${username}`}
@@ -97,6 +97,20 @@ export function SoundCloudLink({ username }: { username: string }) {
       }}
     >
       SoundCloud
+    </SocialLink>
+  );
+}
+
+export function BandcampLink({ username }: { username: string }) {
+  return (
+    <SocialLink
+      href={`https://${username}.bandcamp.com`}
+      style={{
+        backgroundColor: "#629aa9",
+        color: "white",
+      }}
+    >
+      Bandcamp
     </SocialLink>
   );
 }
